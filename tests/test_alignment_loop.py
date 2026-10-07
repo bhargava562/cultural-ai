@@ -4,7 +4,7 @@ import json
 from unittest.mock import patch, MagicMock
 import pytest
 
-from src.pipeline.generator import detect_language_mode, generate_candidate
+from src.pipeline.generator import detect_language_mode, detect_domain_category, generate_candidate
 from src.pipeline.evaluator import (
     CulturalEvaluationResult,
     evaluate_candidate,
@@ -12,6 +12,7 @@ from src.pipeline.evaluator import (
 )
 from src.pipeline.interceptor import run_cultural_alignment_pipeline
 from src.retriever.search import format_cultural_context
+from src.retriever.ingest import chunk_text
 
 
 def test_detect_language_mode():
@@ -26,21 +27,55 @@ def test_detect_language_mode():
     assert detect_language_mode(english_query) == "Regional English"
 
 
+def test_detect_domain_category():
+    """Test domain categorization into Healthcare, Banking/Finance, or Commonsense."""
+    health_q = "What diet is advised for a pregnant woman in Tamil tradition?"
+    assert detect_domain_category(health_q) == "Healthcare"
+
+    finance_q = "How do women participate in local chit fund (seetu) groups?"
+    assert detect_domain_category(finance_q) == "Banking / Finance"
+
+    social_q = "How to invite relatives for Pongal festival?"
+    assert detect_domain_category(social_q) == "Everyday Commonsense"
+
+
+def test_cas_formula_computation():
+    """Test Cultural Alignment Score (CAS) formula computation."""
+    # CAS = 0.30*0.90 + 0.35*0.85 + 0.35*0.95 = 0.27 + 0.2975 + 0.3325 = 0.90
+    cas = CulturalEvaluationResult.compute_cas(0.90, 0.85, 0.95, domain_risk_detected=False)
+    assert cas == 0.90
+
+    # Risk detected -> penalty = 1.0 -> clamped to 0.0
+    cas_risk = CulturalEvaluationResult.compute_cas(0.90, 0.85, 0.95, domain_risk_detected=True)
+    assert cas_risk == 0.0
+
+
+def test_chunk_text():
+    """Test text chunking with overlap."""
+    words = "word " * 600
+    chunks = chunk_text(words, chunk_size=512, chunk_overlap=64)
+    assert len(chunks) >= 2
+
+
 def test_cultural_evaluation_model_validation():
     """Test CulturalEvaluationResult validation and bounds."""
     data = {
         "context_understanding": 0.85,
         "social_appropriateness": 0.90,
         "regional_relevance": 0.80,
-        "stereotype_risk_flag": False,
-        "overall_score": 0.85,
+        "domain_risk_detected": False,
+        "alignment_score": 0.85,
+        "verdict": "PASS",
         "critique": "Solid cultural grounding.",
         "strengths": ["Polite honorifics"],
         "weaknesses": [],
     }
     result = CulturalEvaluationResult(**data)
+    assert result.alignment_score == 0.85
     assert result.overall_score == 0.85
+    assert not result.domain_risk_detected
     assert not result.stereotype_risk_flag
+    assert result.verdict == "PASS"
 
     # Test out of bounds validation error
     with pytest.raises(Exception):
@@ -48,8 +83,8 @@ def test_cultural_evaluation_model_validation():
             context_understanding=1.5,
             social_appropriateness=0.8,
             regional_relevance=0.8,
-            stereotype_risk_flag=False,
-            overall_score=0.8,
+            domain_risk_detected=False,
+            alignment_score=0.8,
             critique="Test",
         )
 
@@ -76,8 +111,8 @@ def test_generate_candidate_with_context(mock_llm):
     assert response == "வணக்கம்! நீங்கள் நலம் தானா?"
     mock_llm.assert_called_once()
     call_args = mock_llm.call_args[1]
-    assert len(call_args["messages"]) == 2
-    assert "Cultural Reference Knowledge:" in call_args["messages"][0]["content"]
+    assert "Context:" in call_args["messages"][0]["content"]
+    assert "Region: Tamil Nadu, India" in call_args["messages"][0]["content"]
 
 
 @patch("src.pipeline.evaluator.generate_completion")

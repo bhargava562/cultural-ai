@@ -31,21 +31,49 @@ def detect_language_mode(text: str) -> str:
     return "Regional English"
 
 
+def detect_domain_category(text: str) -> str:
+    """Detect domain category: Healthcare, Banking/Finance, or Everyday Commonsense."""
+    text_lower = text.lower()
+
+    healthcare_keywords = [
+        "health", "doctor", "medicine", "diet", "food", "fever", "illness", "pregnant",
+        "pregnancy", "baby", "elder", "care", "hospital", "maruthuvam", "vaithiyam",
+        "kashayam", "rasam", "treatment", "pain", "sick"
+    ]
+    finance_keywords = [
+        "bank", "loan", "money", "chit fund", "seetu", "shg", "self-help", "interest",
+        "vaddi", "savings", "gold", "jewel", "property", "asset", "finance", "cash",
+        "rupee", "paisa", "invest"
+    ]
+
+    for kw in healthcare_keywords:
+        if kw in text_lower:
+            return "Healthcare"
+    for kw in finance_keywords:
+        if kw in text_lower:
+            return "Banking / Finance"
+
+    return "Everyday Commonsense"
+
+
 ANTHROPOLOGICAL_SYSTEM_PROMPT = """You are an expert Cultural Anthropologist and Native Linguistic Guide specialized in Tamil Nadu, Dravidian culture, and South Asian regional dynamics.
 
 Your Mission:
-Respond to the user with deep cultural grounding, authentic socio-linguistic markers, and respectful situational etiquette.
+Produce a culturally grounded, socio-linguistically authentic response to the user query according to Anthropological Prompting principles.
 
 Operating Principles:
 1. Grounded Honorifics: Always align with age, hierarchy, and relationship registers (e.g., 'vaanga/ponga' vs 'vaa/po', 'neenga' vs 'nee').
 2. Accurate Kinship: Distinctly respect family networks (Periyamma vs Chithi, Periyappa vs Chithappa, Mama, Athai).
 3. Authentic Tone: When responding in Tamil or Tanglish, use natural colloquial cadences without awkward literal translations or robotic syntax.
-4. Dignity & Anti-Bias: Never perpetuate caste stereotypes, regressive caricatures, or patronizing tropes.
+4. Dignity & Anti-Bias: Never perpetuate caste stereotypes, regressive caricatures, or unscientific harms.
 5. Inclusivity: Foster warm hospitality (Virundhombal) and moral righteousness (Aram).
 
+Region: Tamil Nadu, India
+Tone: Respectful, Culturally Grounded
+Domain: {domain}
 Language Mode: {language_mode}
 
-Cultural Reference Knowledge:
+Context:
 {cultural_context}
 """
 
@@ -59,7 +87,9 @@ def generate_candidate(
 ) -> str:
     """Generate candidate response incorporating retrieved cultural context and optional feedback."""
     lang_mode = detect_language_mode(query)
+    domain = detect_domain_category(query)
     sys_prompt = ANTHROPOLOGICAL_SYSTEM_PROMPT.format(
+        domain=domain,
         language_mode=lang_mode,
         cultural_context=cultural_context or "No specific external context provided.",
     )

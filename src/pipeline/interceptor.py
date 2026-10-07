@@ -138,13 +138,14 @@ def print_diagnostic_report(output: InterceptorOutput) -> None:
     table.add_column("Score / Status", justify="right")
 
     fe = output.final_evaluation
-    table.add_row("Context Understanding", f"{fe.context_understanding:.2f}")
-    table.add_row("Social Appropriateness", f"{fe.social_appropriateness:.2f}")
-    table.add_row("Regional Relevance", f"{fe.regional_relevance:.2f}")
-    risk_style = "bold red" if fe.stereotype_risk_flag else "bold green"
-    table.add_row("Stereotype / Risk Flag", f"[{risk_style}]{fe.stereotype_risk_flag}[/{risk_style}]")
+    table.add_row("Context Understanding (30%)", f"{fe.context_understanding:.2f}")
+    table.add_row("Social Appropriateness (35%)", f"{fe.social_appropriateness:.2f}")
+    table.add_row("Regional Relevance (35%)", f"{fe.regional_relevance:.2f}")
+    risk_style = "bold red" if fe.domain_risk_detected else "bold green"
+    table.add_row("Domain Risk Detected", f"[{risk_style}]{fe.domain_risk_detected}[/{risk_style}]")
     score_style = "bold green" if output.passed_threshold else "bold yellow"
-    table.add_row("Overall Score", f"[{score_style}]{fe.overall_score:.2f}[/{score_style}]")
+    table.add_row("Cultural Alignment Score (CAS)", f"[{score_style}]{fe.alignment_score:.2f}[/{score_style}]")
+    table.add_row("Verdict", f"[{score_style}]{fe.verdict}[/{score_style}]")
     table.add_row("Iterations Used", str(output.iterations_used))
     table.add_row("Status", "[bold green]PASSED[/bold green]" if output.passed_threshold else "[bold red]FAILED[/bold red]")
 

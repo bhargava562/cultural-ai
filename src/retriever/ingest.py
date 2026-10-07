@@ -187,19 +187,151 @@ def ingest_huggingface_dataset(
     return total_ingested
 
 
+def chunk_text(text: str, chunk_size: int = 512, chunk_overlap: int = 64) -> list[str]:
+    """Split text into chunks of roughly chunk_size characters/words with chunk_overlap."""
+    words = text.split()
+    if len(words) <= chunk_size:
+        return [text]
+
+    chunks = []
+    step = max(chunk_size - chunk_overlap, 1)
+    for i in range(0, len(words), step):
+        chunk = " ".join(words[i : i + chunk_size])
+        if chunk.strip():
+            chunks.append(chunk)
+    return chunks
+
+
+def ingest_local_dataset_file(
+    collection: chromadb.Collection,
+    file_path: str | Path,
+    text_column: str = "text",
+    limit: Optional[int] = None,
+    batch_size: int = 50,
+) -> int:
+    """Ingest a local dataset file (.parquet, .json, .jsonl, .csv)."""
+    import json
+    path = Path(file_path)
+    if not path.exists():
+        console.print(f"[red]File not found: {path}[/red]")
+        return 0
+
+    console.print(f"[cyan]Ingesting local dataset file: {path.name}...[/cyan]")
+    texts: list[str] = []
+
+    ext = path.suffix.lower()
+    if ext == ".parquet":
+        try:
+            import pandas as pd
+            df = pd.read_parquet(path)
+            col = text_column if text_column in df.columns else df.columns[0]
+            texts = df[col].dropna().astype(str).tolist()
+        except ImportError:
+            console.print("[yellow]pandas / pyarrow required for parquet ingestion. Please install them or upload jsonl/csv.[/yellow]")
+            return 0
+    elif ext == ".csv":
+        import csv
+        with open(path, "r", encoding="utf-8", errors="replace") as f:
+            reader = csv.DictReader(f)
+            col = text_column if reader.fieldnames and text_column in reader.fieldnames else (reader.fieldnames[0] if reader.fieldnames else None)
+            if col:
+                for row in reader:
+                    if row.get(col):
+                        texts.append(row[col])
+    elif ext in [".jsonl", ".json"]:
+        with open(path, "r", encoding="utf-8", errors="replace") as f:
+            if ext == ".jsonl":
+                for line in f:
+                    line = line.strip()
+                    if line:
+                        obj = json.loads(line)
+                        val = obj.get(text_column) or obj.get("content") or obj.get("sentence") or (list(obj.values())[0] if obj else "")
+                        if val:
+                            texts.append(str(val))
+            else:
+                data = json.load(f)
+                if isinstance(data, list):
+                    for item in data:
+                        if isinstance(item, dict):
+                            val = item.get(text_column) or item.get("content") or item.get("sentence")
+                            if val:
+                                texts.append(str(val))
+                        elif isinstance(item, str):
+                            texts.append(item)
+
+    if not texts:
+        console.print(f"[yellow]No texts extracted from {path.name}[/yellow]")
+        return 0
+
+    batch_ids: list[str] = []
+    batch_docs: list[str] = []
+    batch_meta: list[dict[str, Any]] = []
+    total_ingested = 0
+
+    for idx, raw_text in enumerate(texts):
+        if limit and total_ingested >= limit:
+            break
+
+        chunks = chunk_text(raw_text, chunk_size=512, chunk_overlap=64)
+        for c_idx, chunk in enumerate(chunks):
+            doc_id = f"local_{path.stem}_{idx}_{c_idx}"
+            batch_ids.append(doc_id)
+            batch_docs.append(chunk)
+            batch_meta.append({"source": path.name, "row": idx, "chunk": c_idx})
+
+            if len(batch_ids) >= batch_size:
+                collection.upsert(ids=batch_ids, documents=batch_docs, metadatas=batch_meta)
+                total_ingested += len(batch_ids)
+                batch_ids.clear()
+                batch_docs.clear()
+                batch_meta.clear()
+
+    if batch_ids:
+        collection.upsert(ids=batch_ids, documents=batch_docs, metadatas=batch_meta)
+        total_ingested += len(batch_ids)
+
+    console.print(f"[green]Successfully ingested {total_ingested} chunks from {path.name}.[/green]")
+    return total_ingested
+
+
+def ingest_local_directory(
+    collection: chromadb.Collection,
+    dir_path: str | Path,
+    text_column: str = "text",
+    limit: Optional[int] = None,
+) -> int:
+    """Ingest all supported dataset files from a local directory."""
+    path = Path(dir_path)
+    if not path.exists():
+        console.print(f"[red]Directory not found: {path}[/red]")
+        return 0
+
+    total = 0
+    supported = [".parquet", ".json", ".jsonl", ".csv"]
+    for f in path.iterdir():
+        if f.is_file() and f.suffix.lower() in supported:
+            total += ingest_local_dataset_file(collection, f, text_column=text_column, limit=limit)
+    return total
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Ingest cultural data into local ChromaDB.")
     parser.add_argument("--sample", action="store_true", help="Ingest curated sample documents")
     parser.add_argument("--dataset", type=str, default=None, help="Hugging Face dataset name")
+    parser.add_argument("--file", type=str, default=None, help="Path to local dataset file (.parquet, .jsonl, .csv)")
+    parser.add_argument("--dir", type=str, default=None, help="Path to directory containing dataset files (e.g., data/datasets)")
     parser.add_argument("--text-col", type=str, default="text", help="Text column in dataset")
-    parser.add_argument("--limit", type=int, default=500, help="Max items to stream")
+    parser.add_argument("--limit", type=int, default=500, help="Max items to process")
     args = parser.parse_args()
 
     client = get_chroma_client()
     collection = get_or_create_collection(client)
 
-    if args.sample or (not args.dataset and not args.sample):
-        ingest_sample_docs(collection)
+    if args.file:
+        ingest_local_dataset_file(collection, args.file, text_column=args.text_col, limit=args.limit)
+
+    if args.dir:
+        ingest_local_directory(collection, args.dir, text_column=args.text_col, limit=args.limit)
 
     if args.dataset:
         ingest_huggingface_dataset(
@@ -208,6 +340,9 @@ def main() -> None:
             text_column=args.text_col,
             limit=args.limit,
         )
+
+    if args.sample or (not args.dataset and not args.file and not args.dir and not args.sample):
+        ingest_sample_docs(collection)
 
 
 if __name__ == "__main__":
