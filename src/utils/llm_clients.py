@@ -5,7 +5,6 @@ import time
 import logging
 from typing import Any, Optional
 from dotenv import load_dotenv
-from litellm import completion
 from rich.console import Console
 
 load_dotenv()
@@ -33,6 +32,10 @@ def generate_completion(
     last_error: Optional[Exception] = None
     for attempt in range(max_retries):
         try:
+            # Import on first request so API startup never performs LiteLLM's
+            # optional remote model-cost-map lookup or network initialization.
+            from litellm import completion
+
             response = completion(
                 model=model,
                 messages=messages,

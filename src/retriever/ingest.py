@@ -3,6 +3,7 @@
 import argparse
 import sys
 import logging
+import os
 from pathlib import Path
 from typing import Any, Optional
 import chromadb
@@ -104,15 +105,17 @@ def get_chroma_client(persist_dir: Optional[str] = None) -> chromadb.PersistentC
 
 def get_or_create_collection(client: chromadb.PersistentClient) -> chromadb.Collection:
     """Get or create the cultural knowledge collection with sentence transformers or default ONNX embedding."""
-    try:
-        emb_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name=settings.embedding_model
-        )
-    except Exception as exc:
-        logger.info(
-            "SentenceTransformerEmbeddingFunction not initialized (%s). Falling back to chromadb DefaultEmbeddingFunction (ONNX).",
-            exc,
-        )
+    # Do not download a 400+ MB transformer while importing the API. Opt into
+    # the local Sentence-Transformers model for ingestion/retrieval explicitly.
+    # Chroma's default function is lightweight to construct and defers its own
+    # model work until a query is actually made.
+    if os.getenv("CAL_USE_SENTENCE_TRANSFORMERS", "false").lower() in {"1", "true", "yes"}:
+        try:
+            emb_fn = embedding_functions.SentenceTransformerEmbeddingFunction(model_name=settings.embedding_model)
+        except Exception as exc:
+            logger.info("SentenceTransformerEmbeddingFunction unavailable (%s); using Chroma default embeddings.", exc)
+            emb_fn = embedding_functions.DefaultEmbeddingFunction()
+    else:
         emb_fn = embedding_functions.DefaultEmbeddingFunction()
 
     return client.get_or_create_collection(
@@ -218,6 +221,7 @@ def ingest_local_dataset_file(
 
     console.print(f"[cyan]Ingesting local dataset file: {path.name}...[/cyan]")
     texts: list[str] = []
+    metadata_rows: list[dict[str, Any]] = []
 
     ext = path.suffix.lower()
     if ext == ".parquet":
@@ -226,6 +230,7 @@ def ingest_local_dataset_file(
             df = pd.read_parquet(path)
             col = text_column if text_column in df.columns else df.columns[0]
             texts = df[col].dropna().astype(str).tolist()
+            metadata_rows = [{"source": path.name, "row": i} for i in range(len(texts))]
         except ImportError:
             console.print("[yellow]pandas / pyarrow required for parquet ingestion. Please install them or upload jsonl/csv.[/yellow]")
             return 0
@@ -238,6 +243,7 @@ def ingest_local_dataset_file(
                 for row in reader:
                     if row.get(col):
                         texts.append(row[col])
+                        metadata_rows.append({"source": path.name, "row": len(texts) - 1})
     elif ext in [".jsonl", ".json"]:
         with open(path, "r", encoding="utf-8", errors="replace") as f:
             if ext == ".jsonl":
@@ -248,6 +254,7 @@ def ingest_local_dataset_file(
                         val = obj.get(text_column) or obj.get("content") or obj.get("sentence") or (list(obj.values())[0] if obj else "")
                         if val:
                             texts.append(str(val))
+                            metadata_rows.append({"source": path.name, "row": len(texts) - 1})
             else:
                 data = json.load(f)
                 if isinstance(data, list):
@@ -256,8 +263,10 @@ def ingest_local_dataset_file(
                             val = item.get(text_column) or item.get("content") or item.get("sentence")
                             if val:
                                 texts.append(str(val))
+                                metadata_rows.append({"source": path.name, "row": len(texts) - 1})
                         elif isinstance(item, str):
                             texts.append(item)
+                            metadata_rows.append({"source": path.name, "row": len(texts) - 1})
 
     if not texts:
         console.print(f"[yellow]No texts extracted from {path.name}[/yellow]")
@@ -273,11 +282,12 @@ def ingest_local_dataset_file(
             break
 
         chunks = chunk_text(raw_text, chunk_size=512, chunk_overlap=64)
+        source_meta = metadata_rows[idx] if idx < len(metadata_rows) else {"source": path.name, "row": idx}
         for c_idx, chunk in enumerate(chunks):
             doc_id = f"local_{path.stem}_{idx}_{c_idx}"
             batch_ids.append(doc_id)
             batch_docs.append(chunk)
-            batch_meta.append({"source": path.name, "row": idx, "chunk": c_idx})
+            batch_meta.append({**source_meta, "chunk": c_idx})
 
             if len(batch_ids) >= batch_size:
                 collection.upsert(ids=batch_ids, documents=batch_docs, metadatas=batch_meta)

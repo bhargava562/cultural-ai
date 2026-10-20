@@ -85,6 +85,16 @@ class CulturalEvaluationResult(BaseModel):
         return round(max(0.0, min(1.0, cas)), 4)
 
 
+class CulturalEvaluator:
+    """Object-oriented facade for callers that need a reusable evaluator."""
+
+    def __init__(self, model: Optional[str] = None) -> None:
+        self.model = model
+
+    def evaluate(self, query: str, candidate: str, cultural_context: str = "") -> CulturalEvaluationResult:
+        return evaluate_candidate(query, candidate, cultural_context=cultural_context, model=self.model)
+
+
 JUDGE_SYSTEM_PROMPT = """You are the Lead Cultural Alignment Judge for regional South Asian & Tamil language applications (CAL-LLM).
 
 Your task is to critically evaluate a candidate LLM response to a user query across 4 rubric dimensions:

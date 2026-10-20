@@ -16,38 +16,48 @@ from src.retriever.ingest import get_chroma_client, get_or_create_collection
 console = Console(highlight=False)
 
 
+class CulturalRetriever:
+    """Local Chroma retriever with optional culture/domain metadata filters."""
+
+    def __init__(self, persist_dir: Optional[str] = None) -> None:
+        self.client = get_chroma_client(persist_dir)
+        self.collection = get_or_create_collection(self.client)
+
+    def search(self, query: str, profile: Any = None, top_k: int = 3, domain: Optional[str] = None) -> list[dict[str, Any]]:
+        where: dict[str, Any] = {}
+        culture = getattr(profile, "detected_culture", None)
+        if culture and not culture.startswith("Neutral"):
+            where["dialect_tag"] = culture
+        if domain:
+            where["domain"] = domain
+        kwargs: dict[str, Any] = {"query_texts": [query], "n_results": min(top_k, self.collection.count())}
+        if where:
+            kwargs["where"] = {"$and": [{key: value} for key, value in where.items()]}
+        if not self.collection.count():
+            return []
+        try:
+            results = self.collection.query(**kwargs)
+        except Exception:
+            # A sparse local corpus should still return semantically useful facts.
+            kwargs.pop("where", None)
+            results = self.collection.query(**kwargs)
+        return _results_to_snippets(results)
+
+
+def _results_to_snippets(results: dict[str, Any]) -> list[dict[str, Any]]:
+    documents = results.get("documents", [[]])[0]
+    metadatas = results.get("metadatas", [[]])[0]
+    distances = results.get("distances", [[]])[0] if "distances" in results else []
+    return [{"content": doc, "metadata": metadatas[i] if i < len(metadatas) else {}, "distance": distances[i] if i < len(distances) else None} for i, doc in enumerate(documents)]
+
+
 def query_cultural_context(
     query: str,
     n_results: int = 3,
     persist_dir: Optional[str] = None,
 ) -> list[dict[str, Any]]:
     """Retrieve top-k culturally relevant context snippets from ChromaDB."""
-    client = get_chroma_client(persist_dir)
-    collection = get_or_create_collection(client)
-
-    count = collection.count()
-    if count == 0:
-        return []
-
-    results = collection.query(
-        query_texts=[query],
-        n_results=min(n_results, count),
-    )
-
-    documents = results.get("documents", [[]])[0]
-    metadatas = results.get("metadatas", [[]])[0]
-    distances = results.get("distances", [[]])[0] if "distances" in results else []
-
-    snippets: list[dict[str, Any]] = []
-    for idx, doc in enumerate(documents):
-        meta = metadatas[idx] if idx < len(metadatas) else {}
-        dist = distances[idx] if idx < len(distances) else None
-        snippets.append({
-            "content": doc,
-            "metadata": meta,
-            "distance": dist,
-        })
-    return snippets
+    return CulturalRetriever(persist_dir).search(query, top_k=n_results)
 
 
 def format_cultural_context(snippets: list[dict[str, Any]]) -> str:
