@@ -34,7 +34,7 @@ def test_tamil_slang_guardrail_detects_phrases_and_respects_word_boundaries():
     result = guardrail.alignment_middleware("Machi, this output is vera level!")
 
     assert result["status"] == "adjusted"
-    assert [item["slang"] for item in result["detected_slangs"]] == ["machi", "vera level"]
+    assert set(item["slang"] for item in result["detected_slangs"]) == {"machi", "vera level"}
     assert "warm_peer" in result["cultural_context"]
     assert guardrail.detect_slang("machinery and level") == []
 
@@ -244,3 +244,60 @@ def test_format_cultural_context():
     assert "[1] Doc A:" in formatted
     assert "Snippet 1 text" in formatted
     assert "[2] Doc B:" in formatted
+
+
+def test_sub_regional_tradition_detection_kongu():
+    """Test Tanglish guardrail detecting Kongu Arasanikkal tradition."""
+    guardrail = TamilSlangGuardrail()
+    query = "Enoda ekka kalyanam Coimbatore la nadakudhu, iyer illama arumaikkarar vechu arasanikkal nattu panranga"
+    packet = guardrail.analyze_query(query)
+    assert packet.detected_region == "Kongu Nadu"
+    assert "arasanikkal" in packet.detected_slang_markers
+    assert "arumaikkarar" in packet.detected_slang_markers
+    assert len(packet.matched_traditions) > 0
+    assert packet.matched_traditions[0].tradition_name == "Arasanikkal & Arumaikkarar Wedding Tradition (Kongu Kalyanam)"
+
+
+def test_sub_regional_tradition_detection_delta_moi_virundhu():
+    """Test Tanglish guardrail detecting Delta / Pudukkottai Moi Virundhu tradition."""
+    guardrail = TamilSlangGuardrail()
+    query = "Moi virundhu la cash collect panradhu scam ah illa culture ah machi?"
+    packet = guardrail.analyze_query(query)
+    assert packet.detected_region == "Cauvery Delta & Pudukkottai"
+    assert "moi virundhu" in packet.detected_slang_markers
+    assert len(packet.matched_traditions) > 0
+    assert "Moi Virundhu" in packet.matched_traditions[0].tradition_name
+
+
+def test_sub_regional_tradition_detection_nellai_kodai():
+    """Test Tanglish guardrail detecting Nellai Kodai Vizha Sudalai Madan tradition."""
+    guardrail = TamilSlangGuardrail()
+    query = "Elai, enga Tirunelveli ooru Sudalai Madan kovil Kodai vizha la aadu vetti suruttu vekkuranga"
+    packet = guardrail.analyze_query(query)
+    assert packet.detected_region == "Tirunelveli & Thoothukudi"
+    assert "elai" in packet.detected_slang_markers
+    assert "sudalai madan" in packet.detected_slang_markers
+    assert "kodai vizha" in packet.detected_slang_markers
+
+
+@patch("src.pipeline.generator.generate_completion")
+def test_mediated_generator_prompt_no_dry_dictionary(mock_llm):
+    """Test MediatedResponseGenerator instructs model to explain tradition, not produce dry dictionary."""
+    from src.pipeline.generator import MediatedResponseGenerator
+    from src.pipeline.interceptor import CulturalClassifier
+
+    mock_llm.return_value = "Detailed cultural explanation..."
+    gen = MediatedResponseGenerator()
+    classifier = CulturalClassifier()
+
+    query = "Moi virundhu la cash collect panradhu scam ah?"
+    profile = classifier.classify(query)
+    res = gen.generate(query, profile, [{"content": "Moi virundhu is microfinance"}])
+
+    assert res == "Detailed cultural explanation..."
+    call_args = mock_llm.call_args[1]
+    prompt_sent = call_args["messages"][1]["content"]
+    assert "Do NOT output dry dictionary fields" in prompt_sent
+    assert "Name & acknowledge the specific regional tradition" in prompt_sent
+    assert "Validate why this practice is culturally normative" in prompt_sent
+

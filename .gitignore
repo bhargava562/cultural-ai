@@ -41,6 +41,7 @@ data/processed/*
 !data/processed/.gitkeep
 data/datasets/*
 !data/datasets/.gitkeep
+!data/datasets/tn_regional_traditions_tanglish.json
 .cache/
 hf_cache/
 

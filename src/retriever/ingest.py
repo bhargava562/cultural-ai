@@ -16,7 +16,7 @@ if sys.stdout and hasattr(sys.stdout, "reconfigure"):
 if sys.stderr and hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
-from src.config import settings
+from src.config import settings, BASE_DIR
 
 console = Console(highlight=False)
 logger = logging.getLogger("cultural_ai.ingest")
@@ -126,17 +126,46 @@ def get_or_create_collection(client: chromadb.PersistentClient) -> chromadb.Coll
 
 
 def ingest_sample_docs(collection: chromadb.Collection) -> int:
-    """Ingest curated sample documents into ChromaDB."""
+    """Ingest curated sample documents and regional traditions into ChromaDB."""
     ids = [doc["id"] for doc in SAMPLE_CULTURAL_DOCS]
     documents = [doc["content"] for doc in SAMPLE_CULTURAL_DOCS]
     metadatas = [
-        {"title": doc["title"], "source": doc["source"], "category": doc["category"]}
+        {"title": doc["title"], "source": doc["source"], "category": doc["category"], "dialect_tag": "Tamil"}
         for doc in SAMPLE_CULTURAL_DOCS
     ]
 
+    # Ingest authoritative regional traditions if present
+    traditions_file = BASE_DIR / "data" / "datasets" / "tn_regional_traditions_tanglish.json"
+    if traditions_file.exists():
+        try:
+            import json
+            with open(traditions_file, "r", encoding="utf-8") as f:
+                traditions = json.load(f)
+            for t in traditions:
+                t_id = t["id"]
+                content = (
+                    f"Tradition: {t['tradition_name']}.\n"
+                    f"Region: {t['region']}.\n"
+                    f"Cultural Context: {t['little_tradition_reality']}\n"
+                    f"Guideline: {t['expected_explanation_guideline']}\n"
+                    f"Misconception cleared: {t.get('great_tradition_misconception', '')}\n"
+                    f"Tanglish triggers: {', '.join(t.get('tanglish_slang_triggers', []))}"
+                )
+                ids.append(t_id)
+                documents.append(content)
+                metadatas.append({
+                    "title": t["tradition_name"],
+                    "source": "tn_regional_traditions_tanglish.json",
+                    "category": t.get("domain", "traditions"),
+                    "dialect_tag": t.get("dialect_name", "Tamil"),
+                    "region": t.get("region", "Tamil Nadu"),
+                })
+        except Exception as exc:
+            logger.warning("Failed to load traditions from %s: %s", traditions_file, exc)
+
     collection.upsert(ids=ids, documents=documents, metadatas=metadatas)
     console.print(
-        f"[green]Successfully ingested {len(ids)} curated cultural documents into ChromaDB collection '{COLLECTION_NAME}'.[/green]"
+        f"[green]Successfully ingested {len(ids)} curated cultural & regional tradition documents into ChromaDB collection '{COLLECTION_NAME}'.[/green]"
     )
     return len(ids)
 

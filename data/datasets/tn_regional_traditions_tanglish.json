@@ -1,0 +1,181 @@
+[
+  {
+    "id": "TN-KONGU-001",
+    "region": "Kongu Nadu (Coimbatore, Erode, Tiruppur, Pollachi, Salem, Karur)",
+    "dialect_name": "Kongu Tamil",
+    "tanglish_slang_triggers": [
+      "avo", "ivo", "ekka", "emla", "ammini", "arasanikkal", "arumaikkarar", "kalyanam",
+      "saapteenghala", "solreenga", "enna kannu", "mangala vaazhai", "koodu", "seer koodu"
+    ],
+    "tradition_name": "Arasanikkal & Arumaikkarar Wedding Tradition (Kongu Kalyanam)",
+    "domain": "Marriage & Rituals",
+    "sample_tanglish_queries": [
+      "Enoda ekka kalyanam Coimbatore la nadakudhu, iyer illama arumaikkarar vechu arasanikkal nattu panranga, idhu enna tradition machi?",
+      "Emla, enga ooru kalyanam la mangala vaazhai paadranga, agni kundam vida arasanikkal mukkiyam solranga, why is it like this?"
+    ],
+    "great_tradition_misconception": "Mainstream pan-Indian / Vedic assumptions dictate that a valid Hindu marriage requires a Brahmin priest (purohit), Sanskrit mantras, and homam (sacred fire / agni kundam). Non-Vedic community weddings are mistakenly viewed as incomplete.",
+    "little_tradition_reality": "In Kongu Nadu (Coimbatore, Erode, Tiruppur), traditional community weddings are historically self-sufficient and non-sacerdotal. The ceremony is presided over by a respected community elder called the 'Arumaikkarar' (or Arumaikaaran). Instead of an agni kundam, the sacred center is the 'Arasanikkal' (a green bamboo branch symbolizing royalty, fertility, and public community witnessing) and the singing of ancient Tamil 'Mangala Vaazhthu' verses attributed to poet Kambar.",
+    "expected_explanation_guideline": "Validate that the Kongu Arasanikkal and Arumaikkarar wedding is an authentic, centuries-old Sangam-rooted Dravidian tradition. Reassure the user that conducting a wedding with Arumaikkarar and Arasanikkal is completely auspicious, socially binding, and culturally venerable."
+  },
+  {
+    "id": "TN-MADURAI-001",
+    "region": "Madurai & Thekkathi Belt (Madurai, Dindigul, Theni, Sivaganga, Ramnad, Virudhunagar)",
+    "dialect_name": "Madurai / Thekkathi Tamil",
+    "tanglish_slang_triggers": [
+      "angittu", "ingittu", "embuttu", "pangali", "thaai maaman", "maaman seer", "kaadhu kuthu",
+      "manjal neerattu", "seer", "thekkathi", "saami kida", "marudhu", "veechu", "kalatta"
+    ],
+    "tradition_name": "Thaai Maaman Seer (Maternal Uncle Duty in Lifecycle Rituals)",
+    "domain": "Kinship & Family Obligations",
+    "sample_tanglish_queries": [
+      "Machi, en thangachi payanuku Madurai la kaadhu kuthu function. Angittu thaai maaman seer panradhu evalo mukkiyam? Ivlo selavu panradhu thevaiya?",
+      "Embuttu selavu aanalum manjal neerattu vizha la thaai maaman dhan maalai podanum nu sanda poduranga, why does maternal uncle have this much power in Thekkathi side?"
+    ],
+    "great_tradition_misconception": "Western nuclear family norms and patrilineal-only frameworks view uncles as distant peripheral relatives and consider massive lifecycle expenditures on ceremonies like Kaadhu Kuthu (ear-piercing) or Manjal Neerattu Vizha (puberty rites) to be financial waste or family ego battles.",
+    "little_tradition_reality": "In South Indian Dravidian kinship (particularly dominant across Madurai, Dindigul, and Thekkathi districts), the 'Thaai Maaman' (maternal uncle) represents the mother's natal support system (Thaai Veetu Seer). In ancient Dravidian matrilateral alliances, the uncle is the ritual protector and primary sponsor of a child's lifecycle milestones. At the ear-piercing ceremony, the child sits on the maternal uncle's lap; at puberty rites, the uncle erects the green coconut thatch hut (Pachai Koodaram).",
+    "expected_explanation_guideline": "Explain that 'Thaai Maaman Seer' is not a random ostentatious expense, but a structural social safety net ensuring a married woman's natal brothers remain bound to her children's social welfare. Emphasize that his presence and seer symbolize intergenerational protection, affection, and honoring kinship bonds."
+  },
+  {
+    "id": "TN-SOUTH-002",
+    "region": "Pan-Tamil Nadu / Southern & Kongu Regions",
+    "dialect_name": "General / Southern Tanglish",
+    "tanglish_slang_triggers": [
+      "mama ponnu", "athai paiyan", "muraiponnu", "muraipaiyan", "murai kalyanam",
+      "uravumurai", "sondham", "moraponnu", "athai ponnu", "mama paiyan"
+    ],
+    "tradition_name": "Murai Kalyanam (Dravidian Cross-Cousin & Avuncular Kinship Marriage)",
+    "domain": "Kinship & Marriage",
+    "sample_tanglish_queries": [
+      "En mama ponnu (mother's brother's daughter) kooda enaku marriage fix pannirukanga, but North Indian friends say cousin marriage is wrong and against gotra. What is the real Tamil cultural logic?",
+      "Enga oorla athai paiyan mama ponnu kalyanam panradhu romba normal, why does North Indian culture forbid it while Tamil culture encourages Murai Ponnu marriage?"
+    ],
+    "great_tradition_misconception": "North Indian Hinduism strictly enforces 'Gotra Exogamy' and 'Sapinda' prohibitions, which classify all cousins (cross and parallel) as brothers and sisters (Bhai-Behan), declaring marriage with any cousin or uncle taboo.",
+    "little_tradition_reality": "Anthropologist Thomas Trautmann and Louis Dumont established that South Indian 'Dravidian Kinship' strictly distinguishes between parallel cousins (father's brother's children, mother's sister's children = siblings / Sagotharan-Sagodhari) and cross-cousins (mother's brother's children, father's sister's children = Murai / affinal partners). Murai Kalyanam ensures family land remains consolidated, ancestral care remains within the kinship web, and daughters enter homes where they already have maternal love.",
+    "expected_explanation_guideline": "Clearly contrast North Indian Gotra Exogamy with Dravidian Cross-Cousin Kinship. Affirm that in Tamil tradition, marrying a mother's brother's daughter (Mama Ponnu) or father's sister's son (Athai Paiyan) is not only culturally legitimate but traditionally praised as 'Murai' (normative cultural right), while advising modern genetic awareness neutrally."
+  },
+  {
+    "id": "TN-DELTA-001",
+    "region": "Cauvery Delta & Pudukkottai / Sivaganga (Thanjavur, Pudukkottai, Karaikudi, Peravurani, Aranthangi)",
+    "dialect_name": "Delta / Chettinad Tamil",
+    "tanglish_slang_triggers": [
+      "moi virundhu", "moi note", "seeru", "aachi", "chettiar", "patham", "mutton kida",
+      "peravurani", "aranthangi", "moi ezhudhura", "pandal", "vasool", "panam"
+    ],
+    "tradition_name": "Moi Virundhu (Community Reciprocal Feast & Indigenous Micro-Finance)",
+    "domain": "Banking, Economy & Community Solidarity",
+    "sample_tanglish_queries": [
+      "Enga Pudukkottai side la Moi Virundhu vechu bank counter madhiri cash collect panranga machi, friends ask if this is a scam or real culture?",
+      "Thanjavur Moi Virundhu la aadu vachi biriyani potu laksha kanakula moi ezhudhuranga, is this socially acceptable or pure commercial money collection?"
+    ],
+    "great_tradition_misconception": "Urban or Western observers view organizing a feast solely to receive millions of rupees in recorded cash gifts as extortion, loan-sharking, or commercial exploitation disguised as a party.",
+    "little_tradition_reality": "In Pudukkottai and Thanjavur (particularly Peravurani, Aranthangi, Pattukottai), 'Moi Virundhu' is a world-renowned indigenous rotating micro-finance institution. A host facing debt, capital shortage, or major family transitions serves a massive mutton feast (Kida Virundhu) to thousands of guests. Each guest contributes cash ('Moi'), recorded in a meticulous ledger ('Moi Ezhudhudhal'). The host is morally and socially bound to repay equivalent or greater amounts when the contributors host their own Moi Virundhu in subsequent years.",
+    "expected_explanation_guideline": "Validate 'Moi Virundhu' as an extraordinary indigenous crowd-funding and peer-to-peer interest-free credit system developed by Tamil farming and trading communities to avoid extortionate moneylenders. Affirm that it is built on absolute mutual trust, honor, and community solidarity."
+  },
+  {
+    "id": "TN-CHENNAI-001",
+    "region": "Chennai / North Tamil Nadu (Madras Bashai)",
+    "dialect_name": "Madras Bashai (Chennai Slang)",
+    "tanglish_slang_triggers": [
+      "macha", "maamu", "bemaani", "kasmal", "gethu", "bejaar", "gaana", "marana gaana",
+      "naina", "vettaru", "galatta", "jalsa", "dhool", "daba", "saavu gaana", "parai"
+    ],
+    "tradition_name": "Chennai Marana Gaana & Paraiyattam (Celebratory Funeral & Working-Class Solace)",
+    "domain": "Death Rituals & Urban Folk Culture",
+    "sample_tanglish_queries": [
+      "Macha, enga area la oru thatha death ku gaana paatu paadi parai adichu dance aaduranga, why celebrate death like a festival in North Chennai?",
+      "Naina, Chennai la ezhavu veetla gaana paadradhu yen thappu illa? People from other cities look down on it, what is the real history?"
+    ],
+    "great_tradition_misconception": "Elite Sanskritic and Western Victorian mourning norms expect hushed silence, tears, and grim austerity during funerals. Singing upbeat songs, beating drums (Parai), and dancing are mistakenly considered disrespectful or barbaric.",
+    "little_tradition_reality": "In North Chennai (Madras Bashai culture) and Tamil subaltern traditions, 'Marana Gaana' and 'Paraiyattam' represent an egalitarian philosophical celebration of a completed life ('Koodu Vittu Koodu Paaidhal'). The Parai drum was historically an indigenous communicating instrument of truth and democracy. Marana Gaana songs chronicle the deceased person's struggles, labor, and humanity, providing collective therapeutic grief processing and bidding joyous farewell to an ancestor.",
+    "expected_explanation_guideline": "Validate 'Marana Gaana' and 'Paraiyattam' as profound subaltern philosophical art forms celebrating life, honoring the deceased's labor, and turning communal grief into solidarity. Dispel the elitist stigma that views funeral dance as inappropriate."
+  },
+  {
+    "id": "TN-NELLAI-001",
+    "region": "Tirunelveli & Thoothukudi (Nellai / Thamirabarani Belt)",
+    "dialect_name": "Nellai Tamil",
+    "tanglish_slang_triggers": [
+      "elai", "annachi", "choli", "soli", "kodai vizha", "sudalai madan", "saamiattam",
+      "padaiyal", "suruttu", "aadu vettu", "kaniyan koothu", "magudam", "kaval deivam", "kula deivam"
+    ],
+    "tradition_name": "Kodai Vizha & Kula Deivam Padaiyal (Guardian Deity Non-Vegetarian Padaiyal & Kaniyan Koothu)",
+    "domain": "Religion, Purity & Ancestral Worship",
+    "sample_tanglish_queries": [
+      "Elai, enga Tirunelveli Sudalai Madan kovil Kodai vizha la aadu vetti, suruttu vachi padaiyal poduranga. Some people say non-veg offering to God is sin, is it true?",
+      "Annachi, enga ooru Kodai vizha la Kaniyan koothu and samiyattam nadakum, why is folk guardian deity worship so intense and different from big temple pujas?"
+    ],
+    "great_tradition_misconception": "Agamic/Sanskritic purity-pollution frameworks ('Saatvik' vegetarianism) categorize blood sacrifice, alcohol, and tobacco offerings to deities as 'demonic' (Tamoguna) or sinful.",
+    "little_tradition_reality": "In Tirunelveli and Thoothukudi, 'Kodai Vizha' honors fierce guardian deities (Kaval Deivangal / Kula Deivangal) like Sudalai Madan, Pechi Amman, and Karuppasamy, who are deified ancestors and protectors of the soil. As warriors who shed blood to protect the village, they are offered what warriors and villagers consume: kid goat meat (Aadu Vettu), cigars (Suruttu), and arrack in gratitude. Kaniyan Koothu (Maguda Aattam) narrates their ballads to invoke spiritual possession (Saamiattam).",
+    "expected_explanation_guideline": "Contrast Agamic temple worship with Tamil 'Kula Deivam / Kaval Deivam' ancestral traditions. Affirm that Sudalai Madan Kodai vizha with non-veg padaiyal is a legitimate, ancient Tamil spiritual heritage honoring justice, protection, and ancestral sacrifice without any Vedic inferiority."
+  },
+  {
+    "id": "TN-NANJIL-001",
+    "region": "Kanyakumari (Nanjil Nadu)",
+    "dialect_name": "Nanjil Nadu Tamil (Kanyakumari Slang)",
+    "tanglish_slang_triggers": [
+      "makkale", "potti", "payal", "enthiru", "nanjil", "kalari", "kasavu", "avial",
+      "marumakkathayam", "thekkan", "choodu", "nalla chooda", "edey"
+    ],
+    "tradition_name": "Nanjil Nadu Cultural Synthesis & Matrilineal Kinship Echoes",
+    "domain": "Regional Identity, Food & Marriage",
+    "sample_tanglish_queries": [
+      "Makkale, enga Kanyakumari kalyanam la Kerala style la kasavu pudavai katti, avial and red rice vachi sapadu podranga, are we Tamil or Malayali?",
+      "Enga Nanjil Nadu la potti, payal nu pesuvom, ponnungaluku veetla periya urimai undu, why is Kanyakumari culture so distinct from northern TN?"
+    ],
+    "great_tradition_misconception": "Assuming linguistic state borders created in 1956 mean monolithic cultural purity, expecting Kanyakumari Tamils to behave identically to Chennai or Madurai Tamils.",
+    "little_tradition_reality": "Kanyakumari (Nanjil Nadu) was historically the granary of Travancore and part of the Chera-Pandya confluence. It blends deep Tamil Sangam literary roots with historical Matrilineal inheritance ('Marumakkathayam'), distinctive coconut-coconut oil culinary heritage (Avial, Ulundhanchoru, Theeyal), and gentle linguistic cadences (potti for girl, payal for boy, edey). Women historically enjoyed ancestral property rights earlier than in many other regions.",
+    "expected_explanation_guideline": "Validate Nanjil Nadu's identity as a proud historical confluence of Tamil heritage and Travancore elegance. Celebrate its unique culinary traditions, matrilineal respect, and distinctive dialect as a treasure of Tamil Nadu's diversity."
+  },
+  {
+    "id": "TN-NILGIRIS-001",
+    "region": "Nilgiris (Ooty, Kotagiri, Coonoor)",
+    "dialect_name": "Badaga / Kota / Toda Hill Context",
+    "tanglish_slang_triggers": [
+      "hatti", "hethai amman", "badaga", "kota", "toda", "kolumbu", "seeme", "mund", "dhodda"
+    ],
+    "tradition_name": "Nilgiris Indigenous Kinship & Badaga Hethai Habba",
+    "domain": "Indigenous Hill Traditions & Kinship",
+    "sample_tanglish_queries": [
+      "Naan Nilgiris Kollimalai village ku trip ponen, anga Badaga Hatti community la Hethai Habba celebrate panranga, why do they wear all white clothes and walk barefoot?",
+      "Enga Ooty Badaga Hatti la Hethai Habba appo ellarum white dress potu barefoot la povaanga, what is the sacred meaning behind this tradition?"
+    ],
+    "great_tradition_misconception": "Judging indigenous Nilgiri hill communities (Badaga, Toda, Kota) through plains-Hindu or modern urban consumerist lenses, misinterpreting their sacred white garments as mourning wear.",
+    "little_tradition_reality": "The Nilgiri biosphere hosts distinct indigenous communities. For the Badagas, the largest community, villages are called 'Hattis' grouped into four territorial divisions ('Seeme'). Their premier festival is 'Hethai Habba' honoring ancestral mother goddess Hethai. Wearing pristine unstitched white cloth and walking barefoot across sacred hills symbolizes moral purity, humility before nature, and spiritual communion with ancestors.",
+    "expected_explanation_guideline": "Validate the distinct ecological and anthropological significance of Nilgiris indigenous traditions. Clarify that white attire in Badaga heritage is the highest symbol of divine purity, truth, and devotion, dispelling any plains-derived misconceptions."
+  },
+  {
+    "id": "TN-CHETTINAD-001",
+    "region": "Chettinad (Karaikudi, Devakottai, Kanadukathan, Pudukkottai)",
+    "dialect_name": "Chettinad Tamil",
+    "tanglish_slang_triggers": [
+      "aachi", "chettiar", "vattakai", "seer varisai", "kavuni arisi", "kandangi",
+      "petti", "kai murukku", "maragatha lingam", "nagarakkovil"
+    ],
+    "tradition_name": "Chettinad Nagarathar Seer & Matriarchal Culinary Heritage",
+    "domain": "Family, Trade & Culinary Culture",
+    "sample_tanglish_queries": [
+      "Chettinad kalyanam la yen ivlo paathiram and seer varisai petti pettia tharaanga? Isn't it like dowry?",
+      "Enga aachi veetla Kavuni Arisi and Seepu Seedai senji kudukkuranga, what is the meaning of Chettinad culinary perfectionism?"
+    ],
+    "great_tradition_misconception": "Equating traditional Chettinad 'Seer Varisai' (vessels, kitchen sets, dry provisions) with modern illegal dowry demands, or stereotyping Chettinad spice merely as fiery hot chilies.",
+    "little_tradition_reality": "The Nagarathars (Nattukottai Chettiars) were maritime trading pioneers across Southeast Asia. When men sailed for years, the matriarchs ('Aachis') ran vast palatial households and community finance. The elaborate 'Seer' given to a bride (especially bronze, brass, and Burma teak kitchenware) was the bride's Stridhana—independent economic security and household sovereignty. Their cuisine meticulously balances digestion using freshly ground kalpasi, maratti mokku, and anasipoo, preserving wellness.",
+    "expected_explanation_guideline": "Explain Chettinad Seer as historical Stridhana granting household sovereignty to women during maritime trade expeditions, and highlight Chettinad culinary mastery as sophisticated Ayurvedic gastronomic science."
+  },
+  {
+    "id": "TN-HOSPITALITY-001",
+    "region": "Pan-Tamil Nadu (Universal Cultural Value)",
+    "dialect_name": "General Tamil / Tanglish",
+    "tanglish_slang_triggers": [
+      "virundhombal", "thanneer", "saapittu ponga", "elai pottu", "panthi", "thamboolam",
+      "vetrilai paaku", "poittu varugiren", "kudumbam"
+    ],
+    "tradition_name": "Virundhombal & Tamil Hospitality Protocol",
+    "domain": "Everyday Commonsense & Etiquette",
+    "sample_tanglish_queries": [
+      "Tamil veetuku pona odane thanneer kudukuranga and saapidaama poga koodadhu nu thadukkuraanga, why this much pressure for hospitality?",
+      "Why do Tamil elders get offended if someone says 'Poittu varen' instead of 'Poyittu varugiren'?"
+    ],
+    "great_tradition_misconception": "Viewing insistence on feeding guests as breach of individual boundaries or pushiness, and dismissing verbal nuances around departures as trivial superstition.",
+    "little_tradition_reality": "Rooted in Thirukkural ('Virunthu purathathaatha than undal savamuruthu aayinum vendal paattrandru'), feeding a visitor before self is the highest Tamil dharma (Aram). Offering water immediately soothes heat and weary journey thirst. Sayings like 'Poyittu vaanga' (go and return) signify continuity of life and relationship, whereas blunt 'Po' (go) echoes terminal departure or inauspicious finality.",
+    "expected_explanation_guideline": "Affirm Virundhombal as the foundational ethical pillar of Tamil culture. Guide the user to appreciate the deep warmth, generosity, and protective linguistic sensitivity embedded in Tamil household etiquette."
+  }
+]

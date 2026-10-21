@@ -122,6 +122,50 @@ def prepare_dataset(input_dir: str | Path, output_dir: str | Path = PROCESSED_DI
                 for record in records:
                     if limit is not None and seen >= limit:
                         return knowledge_count, mediator_count
+                    if "tradition_name" in record:
+                        t_name = record["tradition_name"]
+                        t_reg = record.get("region", "Tamil Nadu")
+                        t_reality = record.get("little_tradition_reality", "")
+                        t_guide = record.get("expected_explanation_guideline", "")
+                        t_domain = record.get("domain", "Everyday Commonsense")
+                        chunk = (
+                            f"Tradition: {t_name}. Region: {t_reg}. "
+                            f"Cultural Context & Norm: {t_reality} "
+                            f"Guideline: {t_guide}"
+                        )
+                        knowledge.write(
+                            json.dumps(
+                                {
+                                    "region": t_reg,
+                                    "dialect_tag": record.get("dialect_name", "Tamil"),
+                                    "domain": t_domain,
+                                    "cultural_practice_fact": chunk,
+                                    "source": path.name,
+                                    "chunk_index": 0,
+                                },
+                                ensure_ascii=False,
+                            )
+                            + "\n"
+                        )
+                        knowledge_count += 1
+                        for q in record.get("sample_tanglish_queries", []):
+                            mediator.write(
+                                json.dumps(
+                                    {
+                                        "user_query": q,
+                                        "slang_indicators": record.get("tanglish_slang_triggers", []),
+                                        "dialect_label": record.get("dialect_name", "Tamil"),
+                                        "target_mediated_output": f"Explain the tradition of {t_name}: {t_reality}",
+                                        "source": path.name,
+                                    },
+                                    ensure_ascii=False,
+                                )
+                                + "\n"
+                            )
+                            mediator_count += 1
+                        seen += 1
+                        continue
+
                     text = _record_text(record)
                     if len(text) < 20:
                         continue

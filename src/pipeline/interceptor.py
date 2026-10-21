@@ -25,71 +25,105 @@ console = Console(highlight=False)
 logger = logging.getLogger("cultural_ai.interceptor")
 
 
+from src.pipeline.slang_guardrail import TamilSlangGuardrail, CulturalContextPacket
+
 class CulturalProfile(BaseModel):
     """Typed sociolinguistic profile produced before cultural retrieval."""
 
     detected_culture: str = "Neutral / Unresolved"
     region: str = "South Asia"
+    sub_region: str = "Pan-Tamil Nadu / General"
     slang_tokens_found: list[str] = Field(default_factory=list)
     confidence: float = Field(default=0.0, ge=0.0, le=1.0)
     meaning_confidence: float = Field(default=0.0, ge=0.0, le=1.0)
     dialect_confidence: float = Field(default=0.0, ge=0.0, le=1.0)
     communication_style: str = "Neutral, context-seeking"
     inferred_social_norms: list[str] = Field(default_factory=list)
+    matched_tradition_name: Optional[str] = None
+    little_tradition_reality: Optional[str] = None
+    expected_explanation_guideline: Optional[str] = None
 
 
 class StyleProfiler:
     """Fast, explainable lexical profiler for Tamil, Tanglish, and Hinglish."""
 
-    LEXICONS = {
-        "Tamil (Tamil Nadu / Chennai Slang)": (
-            "machi", "macha", "mapla", "naina", "thambi", "akka", "anna", "pa", "da", "di",
-            "vanakkam", "vaanga", "ponga", "sollunga", "eppadi", "irukinga", "romba", "nalla",
-            "konjam", "ippo", "enna", "yaaru", "saaptiya", "nanba", "saptiya", "sowkiyama", "la", "enga", "yenga",
-            "oorla", "kulir", "kool", "uthuranga", "adhuku", "yen", "epdi", "kupudradhu", "koopidradhu",
-            "pesura", "solra", "irukku", "maadhiri", "paathirukkinga", "seyyavum", "ungalukku",
-        ),
-        "Hindi (Hinglish)": (
+    def __init__(self) -> None:
+        self.guardrail = TamilSlangGuardrail()
+
+    def profile(self, text: str) -> CulturalProfile:
+        packet = self.guardrail.analyze_query(text)
+        lowered = text.lower()
+        tamil_script = bool(re.search(r"[\u0B80-\u0BFF]", text))
+
+        # Check for Hinglish
+        hinglish_words = [
             "arey", "arre", "bhai", "behen", "aap", "aapka", "aapki", "aapko", "kaise", "kaisa",
             "kaisi", "hai", "hain", "haan", "kya", "kyun", "kyon", "main", "mujhe", "mera", "meri",
             "mere", "tum", "tumhara", "tumhari", "tujhe", "tera", "teri", "nahi", "nahin", "bahut",
             "bohot", "achha", "accha", "theek", "thik", "yaar", "dost", "batao", "bolo", "chalo",
             "phir", "abhi", "ghar", "wala", "wali", "namaste", "shukriya", "ji",
-        ),
-    }
+        ]
+        matched_hindi = [w for w in hinglish_words if re.search(rf"\b{re.escape(w)}\b", lowered)]
 
-    def profile(self, text: str) -> CulturalProfile:
-        lowered = text.lower()
-        scores = {culture: [token for token in words if re.search(rf"\b{re.escape(token)}\b", lowered)] for culture, words in self.LEXICONS.items()}
-        culture, tokens = max(scores.items(), key=lambda item: len(item[1]))
-        tamil_script = bool(re.search(r"[\u0B80-\u0BFF]", text))
-        if tamil_script:
-            culture, tokens = "Tamil (Tamil script / region unresolved)", []
-        if not tokens and not tamil_script:
+        if matched_hindi and len(matched_hindi) > len(packet.detected_slang_markers):
+            meaning_conf = min(0.95, 0.70 + (0.05 * len(matched_hindi)))
+            dialect_conf = min(0.90, 0.50 + (0.08 * len(matched_hindi)))
+            return CulturalProfile(
+                detected_culture="Hindi (Hinglish)",
+                region="North India / South Asia",
+                sub_region="North India",
+                slang_tokens_found=matched_hindi,
+                confidence=dialect_conf,
+                meaning_confidence=meaning_conf,
+                dialect_confidence=dialect_conf,
+                communication_style="Colloquial, code-mixed, high-context",
+                inferred_social_norms=[
+                    "Preserve the user's code-mixed script and register",
+                    "Use respectful aap/ji forms when the relationship is unclear",
+                ],
+            )
+
+        if not packet.detected_slang_markers and not tamil_script:
             return CulturalProfile()
-        common_tamil_markers = {"thambi", "sowkiyama", "nalla", "enna", "epdi", "enga", "yenga"}
-        strong_markers = set(tokens) - common_tamil_markers
-        meaning_confidence = min(0.98, 0.72 + (0.05 * len(set(tokens))))
-        dialect_confidence = min(0.92, 0.35 + (0.12 * len(strong_markers))) if culture.startswith("Tamil") else min(0.9, 0.5 + (0.08 * len(set(tokens))))
-        is_hindi = culture.startswith("Hindi")
-        norms = ["Preserve the user's code-mixed script and register", "Ask before assuming a practice is universal"]
-        if is_hindi:
-            norms.append("Use respectful aap/ji forms when the relationship is unclear")
-        else:
-            norms.extend(["Use neenga/vaanga/ponga for elders or unfamiliar people", "Keep Tamil kinship terms relationship-specific"])
-        strong_tamil_region = {"chennai", "madurai", "coimbatore", "kongu", "tirunelveli", "nagercoil", "kanyakumari", "jaffna", "batticaloa"}
-        requested_region = next((word.title() for word in strong_tamil_region if word in lowered), None)
-        if culture.startswith("Tamil"):
-            culture = f"Tamil ({requested_region} / requested style)" if requested_region else "Tamil (Romanized / region unresolved)"
+
+        # Build Tamil/Tanglish profile
+        detected_culture = (
+            "Tamil (Tamil script)"
+            if tamil_script
+            else f"Tamil ({packet.detected_region} Tanglish)"
+        )
+
+        norms = [
+            "Preserve the user's code-mixed script and register",
+            "Always explain the cultural tradition and validate why it is normative",
+            "Use neenga/vaanga/ponga for elders or unfamiliar people",
+            "Keep Tamil kinship terms relationship-specific",
+        ]
+
+        trad_name = packet.matched_traditions[0].tradition_name if packet.matched_traditions else None
+        reality = packet.matched_traditions[0].little_tradition_reality if packet.matched_traditions else None
+        guideline = packet.matched_traditions[0].expected_explanation_guideline if packet.matched_traditions else None
+
+        meaning_conf = min(0.98, 0.75 + (0.04 * len(packet.detected_slang_markers)))
+        dialect_conf = (
+            min(0.95, 0.60 + (0.08 * len(packet.detected_slang_markers)))
+            if packet.detected_region != "Pan-Tamil Nadu / General"
+            else 0.50
+        )
+
         return CulturalProfile(
-            detected_culture=culture,
-            region=(f"{requested_region} / Tamil-speaking region" if requested_region else "Tamil-speaking region") if not is_hindi else "North India / South Asia",
-            slang_tokens_found=sorted(set(tokens)),
-            confidence=dialect_confidence,
-            meaning_confidence=meaning_confidence,
-            dialect_confidence=dialect_confidence,
-            communication_style="Colloquial, code-mixed, high-context" if tokens else "Neutral, context-seeking",
+            detected_culture=detected_culture,
+            region=f"{packet.detected_region} / Tamil Nadu",
+            sub_region=packet.detected_region,
+            slang_tokens_found=packet.detected_slang_markers,
+            confidence=dialect_conf,
+            meaning_confidence=meaning_conf,
+            dialect_confidence=dialect_conf,
+            communication_style="Colloquial, code-mixed, culturally grounded",
             inferred_social_norms=norms,
+            matched_tradition_name=trad_name,
+            little_tradition_reality=reality,
+            expected_explanation_guideline=guideline,
         )
 
 
