@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import type { CSSProperties, FormEvent } from 'react'
+import type { FormEvent } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ArrowUp, Bot, Check, ChevronDown, Copy, Globe2, Menu, Plus, RotateCcw, Sparkles, UserRound, X } from 'lucide-react'
@@ -8,7 +8,6 @@ import './App.css'
 type Role = 'user' | 'assistant'
 type Language = 'English' | 'Tamil' | 'Tanglish' | 'Hinglish'
 type Message = { id: number; role: Role; content: string; language?: Language; error?: boolean }
-type MediatorTelemetry = { culture: string; region: string; confidence: number; slang: string[]; practice: string; cas: number }
 
 const MODEL = import.meta.env.VITE_GROQ_MODEL || 'openai/gpt-oss-120b'
 const API_KEY = import.meta.env.VITE_GROQ_API_KEY
@@ -56,7 +55,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [copiedId, setCopiedId] = useState<number | null>(null)
-  const [telemetry, setTelemetry] = useState<MediatorTelemetry>({ culture: 'Neutral / Unresolved', region: 'South Asia', confidence: 0, slang: [], practice: 'Ask a question to retrieve grounded regional context.', cas: 0 })
   const endRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -83,9 +81,6 @@ function App() {
         const mediatorResponse = await fetch(`${MEDIATOR_API_URL}/api/mediate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query, model: MODEL }) })
         if (!mediatorResponse.ok) throw new Error(`Mediator request failed (${mediatorResponse.status})`)
         const mediated = await mediatorResponse.json()
-        const profile = mediated.cultural_profile || {}
-        const practice = mediated.retrieved_practices?.[0]?.content || 'No verified local practice retrieved.'
-        setTelemetry({ culture: profile.detected_culture || 'Neutral / Unresolved', region: profile.region || 'South Asia', confidence: profile.confidence || 0, slang: profile.slang_tokens_found || [], practice, cas: mediated.evaluation_scores?.CAS || 0 })
         setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', language, content: mediated.mediated_response }])
         setIsLoading(false)
         return
@@ -96,7 +91,6 @@ function App() {
       const data = await response.json()
       const answer = data.choices?.[0]?.message?.content?.trim()
       if (!answer) throw new Error('The model returned an empty response.')
-      setTelemetry({ culture: language === 'Hinglish' ? 'Hindi (Hinglish)' : language === 'Tanglish' ? 'Tamil (Tamil Nadu / Chennai Slang)' : language, region: language === 'Tanglish' ? 'Tamil Nadu / South India' : 'South Asia', confidence: language === 'English' ? 0.2 : 0.78, slang: [], practice: 'Live mediator telemetry is available when VITE_MEDIATOR_API_URL is configured.', cas: 0 })
       setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', language, content: answer }])
     } catch (error) {
       setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', error: true, content: error instanceof Error ? error.message : 'Something went wrong. Please try again.' }])
@@ -147,7 +141,6 @@ function App() {
     {sidebarOpen && <button className="sidebar-scrim" onClick={() => setSidebarOpen(false)} aria-label="Close navigation" />}
     <section className="chat-panel">
       <header className="topbar"><button className="icon-button menu-button" onClick={() => setSidebarOpen(true)} aria-label="Open menu"><Menu size={20} /></button><div className="mobile-brand"><div className="brand-mark"><Sparkles size={15} /></div><strong>nalla.ai</strong></div><div className="topbar-right"><span className="live-pill"><span className="status-dot" /> Live</span><button className="avatar" aria-label="Profile"><UserRound size={17} /></button></div></header>
-      <aside className="telemetry-panel"><div className="telemetry-heading"><span>MEDIATOR TELEMETRY</span><span className="telemetry-live"><span className="status-dot" /> LIVE</span></div><div className="telemetry-culture"><div><small>DETECTED CULTURE</small><strong>{telemetry.culture}</strong><span>{telemetry.region}</span></div><div className="confidence-ring" style={{ '--confidence': `${telemetry.confidence * 100}%` } as CSSProperties}><strong>{Math.round(telemetry.confidence * 100)}%</strong><small>confidence</small></div></div><div className="telemetry-row"><small>SLANG MARKERS</small><div className="slang-chips">{telemetry.slang.length ? telemetry.slang.map((token) => <span key={token}>{token}</span>) : <em>None detected</em>}</div></div><div className="telemetry-practice"><small>RETRIEVED KNOWLEDGE</small><p>{telemetry.practice}</p></div><div className="cas-row"><div><small>CULTURAL ALIGNMENT SCORE</small><strong>{telemetry.cas ? telemetry.cas.toFixed(2) : '—'}</strong></div><div className="cas-bar"><span style={{ width: `${Math.min(100, telemetry.cas * 100)}%` }} /></div></div></aside>
       <div className="conversation"><div className="conversation-inner">
         <div className="welcome-block"><div className="welcome-icon"><Globe2 size={23} /></div><p className="eyebrow">CULTURAL ALIGNMENT LAYER</p><h1>Conversations with <em>context.</em></h1><p className="welcome-copy">A thoughtful assistant that understands the nuance between words, worlds, and the way we relate to one another.</p></div>
         <div className="messages" aria-live="polite">{messages.map((message) => <article className={`message-row ${message.role}`} key={message.id}><div className={`message-avatar ${message.role}`}>{message.role === 'assistant' ? <Bot size={17} /> : <UserRound size={16} />}</div><div className="message-content"><div className="message-meta"><span>{message.role === 'assistant' ? 'nalla.ai' : 'You'}</span>{message.language && <span className="language-tag">{message.language}</span>}</div><div className={`message-bubble ${message.error ? 'error-bubble' : ''}`}>{message.role === 'assistant' ? renderAssistantContent(message.content) : <p>{message.content}</p>}</div>{message.role === 'assistant' && !message.error && <div className="message-actions"><button onClick={() => copyMessage(message)}>{copiedId === message.id ? <Check size={13} /> : <Copy size={13} />} {copiedId === message.id ? 'Copied' : 'Copy'}</button><button onClick={() => setInput('Can you rephrase that with a little more context?')}><RotateCcw size={13} /> Refine</button></div>}</div></article>)}{isLoading && <article className="message-row assistant"><div className="message-avatar assistant"><Bot size={17} /></div><div className="message-content"><div className="message-meta"><span>nalla.ai</span><span className="language-tag">thinking</span></div><div className="message-bubble loading-bubble"><span /><span /><span /></div></div></article>}<div ref={endRef} /></div>
