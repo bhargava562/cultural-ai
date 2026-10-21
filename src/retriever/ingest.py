@@ -27,42 +27,48 @@ COLLECTION_NAME = "tamil_cultural_knowledge"
 SAMPLE_CULTURAL_DOCS = [
     {
         "id": "doc_pongal_traditions",
-        "title": "Thai Pongal Celebrations & Etiquette",
+        "title": "Thai Pongal Celebrations & In-Person Invitation Protocol",
         "content": (
             "தைப்பொங்கல் (Thai Pongal) is the prime harvest festival of Tamils celebrated over 4 days: "
             "Bhogi (போகி), Surya Pongal (சூரியப் பொங்கல்), Mattu Pongal (மாட்டுப் பொங்கல்), and Kaanum Pongal (காணும் பொங்கல்). "
-            "Tradition requires boiling milk and new rice in an earthen pot decorated with ginger and turmeric leaves. "
+            "Tradition requires boiling milk and new harvest rice in an earthen pot decorated with ginger and turmeric leaves. "
             "When milk boils over, family members shout 'Pongalo Pongal!' (பொங்கலோ பொங்கல்). "
-            "Inviting elders requires deep respect (Maryadhai): traditionally done in person or with polite formal language "
-            "using honorific plural verbs (vaanga, ponga, vanthu sirappikka vendum) rather than informal pronouns."
+            "Inviting elder relatives requires deep filial respect (Maryadhai) and in-person protocol (Neril Azhaippu). "
+            "Rather than phone or digital messages, family members visit elders' homes in person carrying Thamboolam "
+            "(betel leaves, areca nut, bananas, and a piece of fresh sugarcane) during auspicious morning hours (Nalla Neram). "
+            "Customary first priority is accorded to maternal uncles (Thaai Maaman) and senior paternal elders (Periyappa), "
+            "inviting them to preside over the festive pot boiling and blessing the home. "
+            "The host family prepares full hospitality (Virundhombal) with fresh sweet Pongal and celebratory feast served on banana leaves."
         ),
         "source": "curated_taxonomy",
         "category": "festivals",
     },
     {
         "id": "doc_honorifics_kinship",
-        "title": "Tamil Honorific Address & Kinship System",
+        "title": "Tamil Kinship Hierarchy & Decision-Making Etiquette",
         "content": (
-            "Tamil culture places immense emphasis on age-appropriate and relationship-specific address. "
-            "Never use singular 'nee' (நீ) for anyone older or unfamiliar; use 'neenga' (நீங்கள்) and verbs ending in '-unga' "
-            "(e.g., vaanga, ukkarunga, sollunga). "
-            "Kinship titles: Mother's elder sister is 'Periyamma' (பெரியம்மா), younger sister is 'Chithi' (சித்தி). "
-            "Father's elder brother is 'Periyappa' (பெரியப்பா), younger brother is 'Chithappa' (சித்தப்பா). "
-            "Maternal uncle is 'Mama' (மாமா), paternal aunt is 'Athai' (அத்தை). "
-            "Greeting an elder traditionally includes folded hands (Vanakkam) and inquiring after their wellbeing (Nalamaa / Sowkyamaa)."
+            "In Tamil and Dravidian kinship systems, family decisions, lifecycle events, and community matters "
+            "are governed by collective consultation (Kudumba Kootam) and mutual respect (Maryadhai). "
+            "Senior elders hold moral authority: maternal uncles (Thaai Maaman), paternal aunts (Athai), "
+            "and elder paternal uncles (Periyappa). "
+            "In lifecycle milestones (Kaadhu Kuthu, Manjal Neerattu, Kalyanam), the maternal uncle has the customary first right "
+            "and duty (Seer) to bless and sponsor the event. "
+            "Family disputes or misunderstandings are resolved through elder consultation and consensus rather than confrontational argument, "
+            "preserving family honor (Kudumba Maryadhai) and kinship alliances."
         ),
         "source": "curated_taxonomy",
         "category": "kinship",
     },
     {
         "id": "doc_virundhombal_hospitality",
-        "title": "Virundhombal: Tamil Hospitality Norms",
+        "title": "Virundhombal: Tamil Hospitality Norms & Conflict De-escalation",
         "content": (
-            "விருந்தோம்பல் (Virundhombal) is an essential pillar described in Thirukkural. "
-            "When guests enter a Tamil home, offering a tumbler of water (Thanneer) is immediate and mandatory before business or talk. "
-            "Guests must always be invited to share a meal (Saapittu ponga). "
-            "Refusing food completely can cause polite embarrassment; accepting at least tea, coffee, or prasadam is customary. "
-            "When seeing guests off, one never says 'Poittu vaa' (go); instead say 'Poyittu varugiren' / 'Poyittu vaanga' (go and return)."
+            "விருந்தோம்பல் (Virundhombal) is an essential ethical pillar immortalized in Thirukkural. "
+            "When guests enter a Tamil home, offering a tumbler of fresh water (Thanneer) is immediate and mandatory before any business or discussion. "
+            "Sharing a meal or snack (Saapittu ponga) softens negotiations, de-escalates conflicts, and builds inter-familial trust. "
+            "Accepting hospitality is an act of reciprocal honor; refusing food completely is socially awkward. "
+            "When seeing guests off, one never uses the final departure phrase 'Poittu vaa' (go); "
+            "instead, customary etiquette requires 'Poyittu varugiren' or 'Poyittu vaanga' (go and return safely)."
         ),
         "source": "curated_taxonomy",
         "category": "social_norms",
@@ -75,20 +81,20 @@ SAMPLE_CULTURAL_DOCS = [
             "In Chennai colloquial speech: 'Machi' / 'Mappillai' denotes deep fraternal friendship between peers. "
             "'Naina' means elder/father figure in North Chennai slang. "
             "'Galatta' means playful chaos or noisy celebration. "
-            "Markers like 'pa' soften commands into friendly requests ('Konjam kelunga pa'). "
-            "Casual markers like 'da' or 'di' should NEVER be directed at elders or professional acquaintances."
+            "'Doulath' (swagger/flaunting) is candidly checked by close friends ('doulath suthaadhe, padi') with peer love. "
+            "Casual markers like 'da' or 'di' are strictly for intimate friends and should never be directed at elders or formal acquaintances."
         ),
         "source": "curated_taxonomy",
         "category": "linguistics",
     },
     {
         "id": "doc_kongu_tamil_warmth",
-        "title": "Kongu Tamil Politeness & Idioms",
+        "title": "Kongu Tamil Politeness, Kinship Inquiries & Hospitality",
         "content": (
-            "Kongu Tamil (Coimbatore, Erode, Tiruppur) is renowned for gentle, continuous politeness markers. "
-            "Verbal suffix '-unga' is added even when addressing younger relatives or children out of affectionate respect "
-            "(e.g., 'enna kannu solreenga', 'saapteengalaa'). "
-            "Hospitality is marked by persistent offers of home-cooked food and warm familial inquiries."
+            "Kongu Tamil (Coimbatore, Erode, Tiruppur, Pollachi) is renowned for gentle, continuous domestic warmth. "
+            "Inquiries into health and family wellbeing ('sowkiyama', 'epdi irukeenga') precede all practical business. "
+            "Weddings are traditionally officiated by an Arumaikkarar (community elder) with the Arasanikkal (sacred bamboo pillar). "
+            "Hospitality is marked by persistent offers of home-cooked food ('saapittu ponga') and affectionate kinship solidarity."
         ),
         "source": "curated_taxonomy",
         "category": "linguistics",
