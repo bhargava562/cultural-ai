@@ -72,8 +72,8 @@ function App() {
     setMessages((current) => [...current, userMessage])
     setInput('')
     setIsLoading(true)
-    if (!API_KEY) {
-      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', error: true, content: 'Add your Groq key to `frontend/.env` as `VITE_GROQ_API_KEY=...`, then restart the Vite server to start chatting.' }])
+    if (!API_KEY && !MEDIATOR_API_URL) {
+      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', error: true, content: 'Add your Groq key to `frontend/.env` as `VITE_GROQ_API_KEY=...` or configure `VITE_MEDIATOR_API_URL`, then restart the Vite server to start chatting.' }])
       setIsLoading(false)
       return
     }
