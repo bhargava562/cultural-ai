@@ -178,7 +178,13 @@ def ingest_huggingface_dataset(
     batch_size: int = 50,
 ) -> int:
     """Ingest documents from a Hugging Face dataset in streaming/batched mode."""
-    from datasets import load_dataset
+    try:
+        from datasets import load_dataset
+    except ImportError:
+        console.print(
+            "[red]The 'datasets' package is required for Hugging Face ingestion. Please install it using 'pip install datasets'.[/red]"
+        )
+        return 0
 
     console.print(
         f"[cyan]Streaming dataset '{dataset_name}' (limit: {limit}, batch: {batch_size})...[/cyan]"
