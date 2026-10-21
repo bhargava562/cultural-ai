@@ -106,6 +106,36 @@ function App() {
   const copyMessage = async (message: Message) => { await navigator.clipboard.writeText(message.content); setCopiedId(message.id); window.setTimeout(() => setCopiedId(null), 1600) }
   const clearChat = () => { setMessages([{ id: Date.now(), role: 'assistant', language: 'English', content: 'New conversation ready. What would you like to explore?' }]); setSidebarOpen(false) }
 
+  const renderAssistantContent = (content: string) => {
+    const dividerRegex = /\n\s*---\s*\n/
+    const match = content.match(dividerRegex)
+    if (match && match.index !== undefined) {
+      const conversationalPart = content.slice(0, match.index).trim()
+      const culturalPart = content.slice(match.index + match[0].length).trim()
+      return (
+        <div className="assistant-structured-response">
+          {conversationalPart && (
+            <div className="conversational-body">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{conversationalPart}</ReactMarkdown>
+            </div>
+          )}
+          {culturalPart && (
+            <div className="cultural-context-card">
+              <div className="cultural-card-header">
+                <Sparkles size={13} />
+                <span>Cultural Context & State Detection</span>
+              </div>
+              <div className="cultural-card-body">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{culturalPart}</ReactMarkdown>
+              </div>
+            </div>
+          )}
+        </div>
+      )
+    }
+    return <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+  }
+
   return <main className="app-shell">
     <div className="ambient ambient-one" /><div className="ambient ambient-two" />
     <aside className={`sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}>
@@ -120,7 +150,7 @@ function App() {
       <aside className="telemetry-panel"><div className="telemetry-heading"><span>MEDIATOR TELEMETRY</span><span className="telemetry-live"><span className="status-dot" /> LIVE</span></div><div className="telemetry-culture"><div><small>DETECTED CULTURE</small><strong>{telemetry.culture}</strong><span>{telemetry.region}</span></div><div className="confidence-ring" style={{ '--confidence': `${telemetry.confidence * 100}%` } as CSSProperties}><strong>{Math.round(telemetry.confidence * 100)}%</strong><small>confidence</small></div></div><div className="telemetry-row"><small>SLANG MARKERS</small><div className="slang-chips">{telemetry.slang.length ? telemetry.slang.map((token) => <span key={token}>{token}</span>) : <em>None detected</em>}</div></div><div className="telemetry-practice"><small>RETRIEVED KNOWLEDGE</small><p>{telemetry.practice}</p></div><div className="cas-row"><div><small>CULTURAL ALIGNMENT SCORE</small><strong>{telemetry.cas ? telemetry.cas.toFixed(2) : '—'}</strong></div><div className="cas-bar"><span style={{ width: `${Math.min(100, telemetry.cas * 100)}%` }} /></div></div></aside>
       <div className="conversation"><div className="conversation-inner">
         <div className="welcome-block"><div className="welcome-icon"><Globe2 size={23} /></div><p className="eyebrow">CULTURAL ALIGNMENT LAYER</p><h1>Conversations with <em>context.</em></h1><p className="welcome-copy">A thoughtful assistant that understands the nuance between words, worlds, and the way we relate to one another.</p></div>
-        <div className="messages" aria-live="polite">{messages.map((message) => <article className={`message-row ${message.role}`} key={message.id}><div className={`message-avatar ${message.role}`}>{message.role === 'assistant' ? <Bot size={17} /> : <UserRound size={16} />}</div><div className="message-content"><div className="message-meta"><span>{message.role === 'assistant' ? 'nalla.ai' : 'You'}</span>{message.language && <span className="language-tag">{message.language}</span>}</div><div className={`message-bubble ${message.error ? 'error-bubble' : ''}`}>{message.role === 'assistant' ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown> : <p>{message.content}</p>}</div>{message.role === 'assistant' && !message.error && <div className="message-actions"><button onClick={() => copyMessage(message)}>{copiedId === message.id ? <Check size={13} /> : <Copy size={13} />} {copiedId === message.id ? 'Copied' : 'Copy'}</button><button onClick={() => setInput('Can you rephrase that with a little more context?')}><RotateCcw size={13} /> Refine</button></div>}</div></article>)}{isLoading && <article className="message-row assistant"><div className="message-avatar assistant"><Bot size={17} /></div><div className="message-content"><div className="message-meta"><span>nalla.ai</span><span className="language-tag">thinking</span></div><div className="message-bubble loading-bubble"><span /><span /><span /></div></div></article>}<div ref={endRef} /></div>
+        <div className="messages" aria-live="polite">{messages.map((message) => <article className={`message-row ${message.role}`} key={message.id}><div className={`message-avatar ${message.role}`}>{message.role === 'assistant' ? <Bot size={17} /> : <UserRound size={16} />}</div><div className="message-content"><div className="message-meta"><span>{message.role === 'assistant' ? 'nalla.ai' : 'You'}</span>{message.language && <span className="language-tag">{message.language}</span>}</div><div className={`message-bubble ${message.error ? 'error-bubble' : ''}`}>{message.role === 'assistant' ? renderAssistantContent(message.content) : <p>{message.content}</p>}</div>{message.role === 'assistant' && !message.error && <div className="message-actions"><button onClick={() => copyMessage(message)}>{copiedId === message.id ? <Check size={13} /> : <Copy size={13} />} {copiedId === message.id ? 'Copied' : 'Copy'}</button><button onClick={() => setInput('Can you rephrase that with a little more context?')}><RotateCcw size={13} /> Refine</button></div>}</div></article>)}{isLoading && <article className="message-row assistant"><div className="message-avatar assistant"><Bot size={17} /></div><div className="message-content"><div className="message-meta"><span>nalla.ai</span><span className="language-tag">thinking</span></div><div className="message-bubble loading-bubble"><span /><span /><span /></div></div></article>}<div ref={endRef} /></div>
         {messages.length === 1 && <div className="starter-grid">{starterPrompts.map((prompt) => <button key={prompt} onClick={() => setInput(prompt)}>{prompt}<ArrowUp size={14} /></button>)}</div>}
       </div></div>
       <div className="composer-wrap"><form className="composer" onSubmit={sendMessage}><textarea value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void sendMessage() } }} placeholder="Ask in Tamil, Tanglish, Hinglish, or English..." rows={1} aria-label="Message" /><button className="send-button" type="submit" disabled={!input.trim() || isLoading} aria-label="Send message"><ArrowUp size={18} /></button></form><p className="composer-note"><Sparkles size={12} /> Responses adapt to your language and cultural context <span>·</span> Shift + Enter for a new line</p></div>

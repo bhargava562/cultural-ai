@@ -41,6 +41,8 @@ class MediateResponse(BaseModel):
     cultural_profile: dict[str, Any]
     retrieved_practices: list[dict[str, Any]]
     mediated_response: str
+    conversational_response: Optional[str] = None
+    cultural_insights: Optional[str] = None
     evaluation_scores: dict[str, Any]
     guardrail: dict[str, Any]
 
@@ -92,10 +94,19 @@ def mediate(request: MediateRequest) -> MediateResponse:
         verdict="PASS" if cas_score >= 0.75 else "REVIEW",
         critique="Grounded in verified regional tradition." if has_traditions else ("Retrieved practice grounding present." if practices else "General cultural guidance applied."),
     )
+    conversational_part = response
+    cultural_insights_part = None
+    if "---" in response:
+        parts = response.split("---", 1)
+        conversational_part = parts[0].strip()
+        cultural_insights_part = parts[1].strip()
+
     return MediateResponse(
         cultural_profile=profile.model_dump(),
         retrieved_practices=practices,
         mediated_response=response,
+        conversational_response=conversational_part,
+        cultural_insights=cultural_insights_part,
         evaluation_scores={"CAS": evaluation.alignment_score, **evaluation.model_dump()},
         guardrail=guardrail_result,
     )
