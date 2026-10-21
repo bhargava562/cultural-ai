@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from typing import Any, Optional
 
 from fastapi import FastAPI
@@ -57,7 +58,7 @@ def mediate(request: MediateRequest) -> MediateResponse:
     guardrail_result = slang_guardrail.alignment_middleware(request.query)
     profile = classifier.classify(request.query)
 
-    packet = guardrail_result.get("packet", {})
+    packet = guardrail_result.get("packet") or guardrail_result
     if packet.get("detected_region") and packet["detected_region"] != "Pan-Tamil Nadu / General":
         profile.region = packet["detected_region"]
         if profile.detected_culture in ("Neutral / Unresolved", "Tamil (Tamil script / region unresolved)"):
@@ -66,7 +67,18 @@ def mediate(request: MediateRequest) -> MediateResponse:
     if guardrail_result.get("detected_slangs") and not profile.slang_tokens_found:
         profile.slang_tokens_found = [s["slang"] for s in guardrail_result["detected_slangs"]]
 
-    practices = retriever.search(request.query, profile=profile, top_k=request.top_k)
+    practices: list[dict[str, Any]] = []
+    if packet.get("matched_traditions"):
+        for t in packet["matched_traditions"]:
+            practices.append({
+                "content": f"{t['tradition_name']} ({t['region']}): {t['little_tradition_reality']} Guideline: {t['expected_explanation_guideline']}",
+                "metadata": {"title": t["tradition_name"], "region": t["region"]},
+            })
+    retrieved = retriever.search(request.query, profile=profile, top_k=request.top_k)
+    for r in retrieved:
+        if r.get("metadata", {}).get("title") not in [p.get("metadata", {}).get("title") for p in practices]:
+            practices.append(r)
+    practices = practices[:request.top_k]
     response = generator.generate(
         request.query,
         profile,
@@ -100,6 +112,13 @@ def mediate(request: MediateRequest) -> MediateResponse:
         parts = response.split("---", 1)
         conversational_part = parts[0].strip()
         cultural_insights_part = parts[1].strip()
+    elif "PART 2" in response:
+        parts = re.split(r"\*{0,2}PART\s*2[^\n]*\*{0,2}", response, maxsplit=1, flags=re.IGNORECASE)
+        conversational_part = parts[0].strip()
+        cultural_insights_part = parts[1].strip() if len(parts) > 1 else None
+
+    # Strip any leading 'PART 1...' or '**PART 1...' markers from the conversational reply
+    conversational_part = re.sub(r"^\*{0,2}PART\s*1[^\n]*\*{0,2}\s*", "", conversational_part, flags=re.IGNORECASE).strip()
 
     return MediateResponse(
         cultural_profile=profile.model_dump(),

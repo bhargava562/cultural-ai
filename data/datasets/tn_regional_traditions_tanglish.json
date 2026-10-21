@@ -177,5 +177,43 @@
     "great_tradition_misconception": "Viewing insistence on feeding guests as breach of individual boundaries or pushiness, and dismissing verbal nuances around departures as trivial superstition.",
     "little_tradition_reality": "Rooted in Thirukkural ('Virunthu purathathaatha than undal savamuruthu aayinum vendal paattrandru'), feeding a visitor before self is the highest Tamil dharma (Aram). Offering water immediately soothes heat and weary journey thirst. Sayings like 'Poyittu vaanga' (go and return) signify continuity of life and relationship, whereas blunt 'Po' (go) echoes terminal departure or inauspicious finality.",
     "expected_explanation_guideline": "Affirm Virundhombal as the foundational ethical pillar of Tamil culture. Guide the user to appreciate the deep warmth, generosity, and protective linguistic sensitivity embedded in Tamil household etiquette."
+  },
+  {
+    "id": "TN-CHENNAI-002",
+    "region": "Chennai / North Tamil Nadu (Madras Bashai)",
+    "dialect_name": "Madras Bashai (Chennai Street Slang & Peer Register)",
+    "tanglish_slang_triggers": [
+      "doulath", "dowlath", "suthuradha", "suthuradhavitutu", "suthuradhu", "suthaadhe",
+      "vetti", "alaparai", "bemaani", "bejaar", "kasmal", "scene", "kalachify", "dei", "attagasam", "somberi"
+    ],
+    "tradition_name": "Madras Bashai Urban Vernacular & Peer Camaraderie",
+    "domain": "Urban Subculture, Slang & Peer Guidance",
+    "sample_tanglish_queries": [
+      "dei doulath ah suthuradhavitutu padi",
+      "macha avan romba doulath kaatraan da, enna panradhu?",
+      "vettiya oor suthama padi da machi"
+    ],
+    "great_tradition_misconception": "Linguistic purists dismiss Madras Bashai as 'corrupt' or 'vulgar' slang, and outsiders misinterpret direct street reprimands ('doulath suthaadhe, padi') as hostile abuse rather than affectionate peer advice.",
+    "little_tradition_reality": "Madras Bashai is a vibrant, organic contact vernacular born from Chennai's bustling working-class harbor and trade history. It absorbs Hindustani/Urdu ('doulath' meaning swagger, pomp, or displaying wealth; 'bemaani' meaning unprincipled; 'galatta' meaning noise/chaos), Telugu, and English. In close peer circles, 'dei' and blunt street advice represent intense egalitarian camaraderie (Thozhamai)—friends actively check each other's arrogance and push one another to study or work hard without pretentious polite filters.",
+    "expected_explanation_guideline": "Validate Madras Bashai as an authentic living vernacular with rich multilingual etymology. Explain that 'doulath' denotes swagger/showoff attitude. Answer the user in natural Chennai peer register (e.g. 'Aama da machi, correct ah sonna...'), validating candid peer support."
+  },
+  {
+    "id": "TN-KONGU-002",
+    "region": "Kongu Nadu (Coimbatore, Erode, Tiruppur, Pollachi, Salem)",
+    "dialect_name": "Kongu Tamil",
+    "tanglish_slang_triggers": [
+      "yenunga", "enanga", "sowkiyama", "sowkkiyama", "saapteengala", "saapteenghala",
+      "solreenga", "enna kannu", "nalla irukkeengala"
+    ],
+    "tradition_name": "Kongu Domestic Politeness & 'Sowkiyama' Kinship Inquiries",
+    "domain": "Everyday Commonsense, Politeness & Kinship",
+    "sample_tanglish_queries": [
+      "yenunga, epdi irukeenga sowkiyama ?",
+      "enga oorla chinna pasangalukum 'unga' pottu pesuvanga, why is Kongu Tamil so polite?",
+      "saapteengalaa kannu nu kekaama pesave maatraanga"
+    ],
+    "great_tradition_misconception": "Outsiders often mistake the universal polite suffix '-unga' in Kongu speech as overly formal, distant, or sarcastic when spoken to juniors.",
+    "little_tradition_reality": "In Kongu Nadu, the suffix '-unga' is an expression of maternal and familial affection (Anbu) rather than distant formality. It is spoken to elders, peers, and children alike ('Enna kannu solreenga'). The phrase 'Sowkiyama?' inquires after holistic bodily, agricultural, and domestic wellness, reflecting the deep agrarian interdependence of the region where a family's welfare is tied to community harmony.",
+    "expected_explanation_guideline": "Validate Kongu politeness and the 'Sowkiyama' welfare inquiry as a signature cultural hallmark of familial respect and warmth. Respond in authentic Kongu cadence using gentle '-nga' honorifics and inquiring warmly after the household."
   }
 ]

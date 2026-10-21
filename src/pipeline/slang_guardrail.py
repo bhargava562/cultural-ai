@@ -47,12 +47,20 @@ SUB_REGIONAL_LEXICON: dict[str, dict[str, Any]] = {
     "arasanikkal": {"region": "Kongu Nadu", "tradition": "TN-KONGU-001", "tone": "respectful_traditional"},
     "arumaikkarar": {"region": "Kongu Nadu", "tradition": "TN-KONGU-001", "tone": "respectful_traditional"},
     "mangala vaazhai": {"region": "Kongu Nadu", "tradition": "TN-KONGU-001", "tone": "traditional_festive"},
+    "yenunga": {"region": "Kongu Nadu", "tradition": "TN-KONGU-002", "tone": "polite_respectful"},
+    "enanga": {"region": "Kongu Nadu", "tradition": "TN-KONGU-002", "tone": "polite_respectful"},
+    "sowkiyama": {"region": "Kongu Nadu", "tradition": "TN-KONGU-002", "tone": "familial_warmth"},
+    "sowkkiyama": {"region": "Kongu Nadu", "tradition": "TN-KONGU-002", "tone": "familial_warmth"},
+    "saapteengala": {"region": "Kongu Nadu", "tone": "domestic_politeness"},
+    "saapteenghala": {"region": "Kongu Nadu", "tone": "domestic_politeness"},
+    "solreenga": {"region": "Kongu Nadu", "tone": "polite_verbal"},
     "avo": {"region": "Kongu Nadu", "tone": "colloquial_kongu"},
     "ivo": {"region": "Kongu Nadu", "tone": "colloquial_kongu"},
     "ekka": {"region": "Kongu Nadu", "tone": "familial_warmth"},
     "emla": {"region": "Kongu Nadu", "tone": "friendly_peer"},
     "ammini": {"region": "Kongu Nadu", "tone": "affectionate_respect"},
     "enna kannu": {"region": "Kongu Nadu", "tone": "affectionate_warmth"},
+    "kannu": {"region": "Kongu Nadu", "tone": "affectionate_warmth"},
     "saapteenghala": {"region": "Kongu Nadu", "tone": "polite_respectful"},
 
     # 2. Madurai & Thekkathi Belt
@@ -89,6 +97,16 @@ SUB_REGIONAL_LEXICON: dict[str, dict[str, Any]] = {
     "marana gaana": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-001", "tone": "subaltern_solace"},
     "saavu gaana": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-001", "tone": "subaltern_solace"},
     "parai adichu": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-001", "tone": "subaltern_solace"},
+    "doulath ah suthuradhavitutu": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-002", "tone": "street_camaraderie"},
+    "doulath": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-002", "tone": "swagger_pride"},
+    "dowlath": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-002", "tone": "swagger_pride"},
+    "suthuradhavitutu": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-002", "tone": "street_camaraderie"},
+    "suthuradha": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-002", "tone": "street_camaraderie"},
+    "suthuradhu": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-002", "tone": "street_camaraderie"},
+    "suthaadhe": {"region": "Chennai / Madras Bashai", "tradition": "TN-CHENNAI-002", "tone": "street_camaraderie"},
+    "alaparai": {"region": "Chennai / Madras Bashai", "tone": "overaction"},
+    "kalachify": {"region": "Chennai / Madras Bashai", "tone": "teasing"},
+    "vetti": {"region": "Chennai / Madras Bashai", "tone": "casual_slang"},
     "macha": {"region": "Chennai / Madras Bashai", "tone": "warm_peer"},
     "machi": {"region": "Chennai / Madras Bashai", "tone": "warm_peer"},
     "machan": {"region": "Chennai / Madras Bashai", "tone": "warm_peer"},
@@ -98,6 +116,7 @@ SUB_REGIONAL_LEXICON: dict[str, dict[str, Any]] = {
     "bemaani": {"region": "Chennai / Madras Bashai", "tone": "playful_slang"},
     "bejaar": {"region": "Chennai / Madras Bashai", "tone": "colloquial_distress"},
     "kasmal": {"region": "Chennai / Madras Bashai", "tone": "playful_slang"},
+    "dei": {"region": "Chennai / Madras Bashai", "tone": "informal_peer"},
     "vera level": {"region": "Pan-Tamil Nadu", "tone": "enthusiastic_praise"},
 
     # 6. Tirunelveli & Thoothukudi (Nellai / Thamirabarani)
@@ -243,8 +262,10 @@ class TamilSlangGuardrail:
     def alignment_middleware(self, user_input: str) -> dict[str, Any]:
         """Backward-compatible middleware interface returning dict representation."""
         packet = self.analyze_query(user_input)
+        packet_dict = packet.model_dump()
         return {
             "status": packet.status,
+            "packet": packet_dict,
             "detected_slangs": [{"slang": m} for m in packet.detected_slang_markers],
             "cultural_context": packet.cultural_context_instruction,
             "detected_region": packet.detected_region,
