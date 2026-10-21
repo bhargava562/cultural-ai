@@ -11,6 +11,7 @@ from src.pipeline.evaluator import (
     _clean_json_string,
 )
 from src.pipeline.interceptor import run_cultural_alignment_pipeline
+from src.pipeline.slang_guardrail import TamilSlangGuardrail
 from src.retriever.search import format_cultural_context
 from src.retriever.ingest import chunk_text
 
@@ -25,6 +26,25 @@ def test_detect_language_mode():
 
     english_query = "What are the common social etiquettes when visiting a family in South India?"
     assert detect_language_mode(english_query) == "Regional English"
+
+
+def test_tamil_slang_guardrail_detects_phrases_and_respects_word_boundaries():
+    guardrail = TamilSlangGuardrail()
+
+    result = guardrail.alignment_middleware("Machi, this output is vera level!")
+
+    assert result["status"] == "adjusted"
+    assert [item["slang"] for item in result["detected_slangs"]] == ["machi", "vera level"]
+    assert "warm_peer" in result["cultural_context"]
+    assert guardrail.detect_slang("machinery and level") == []
+
+
+def test_tamil_slang_guardrail_passes_neutral_input():
+    result = TamilSlangGuardrail().alignment_middleware("How does sorting work?")
+
+    assert result["status"] == "pass"
+    assert result["detected_slangs"] == []
+    assert result["adjusted_prompt"] == "How does sorting work?"
 
 
 def test_detect_domain_category():

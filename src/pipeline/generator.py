@@ -145,6 +145,7 @@ class MediatedResponseGenerator:
         profile: Any,
         retrieved_practices: list[dict[str, Any]],
         model: Optional[str] = None,
+        guardrail_context: Optional[str] = None,
     ) -> str:
         practices = "\n".join(
             f"- {item.get('content', item.get('cultural_practice_fact', ''))}" for item in retrieved_practices
@@ -178,6 +179,8 @@ For non-translation questions, answer in the user's language mode and tone. Use 
 Internal profile (do not expose as an identity claim): {profile.model_dump_json()}
 Retrieved practices (use only when relevant):
 {practices}
+
+{f"Style guardrail for this request:\n{guardrail_context}" if guardrail_context else ""}
 
 User query: {query}"""
         return generate_completion(
