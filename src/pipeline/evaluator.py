@@ -117,12 +117,14 @@ Your task is to critically evaluate a candidate LLM response to a user query acr
 
 1. Context Understanding (0.0 - 1.0, 30% weight):
    - Grasp of family dynamics, situational gravity, unspoken household norms, and cultural subtext.
-   - TRADITION IDENTIFICATION: Did the candidate explicitly identify and name the specific regional custom (e.g. Thaai Maaman Seer, Arasanikkal, Moi Virundhu, Kodai Vizha, Murai Kalyanam)?
+   - TRADITION IDENTIFICATION: Did the candidate explicitly identify and name the specific regional custom (e.g. Kudumba Mudivu & Seniors Vicharanai, Thaai Maaman Seer, Arasanikkal, Moi Virundhu, Kodai Vizha, Murai Kalyanam)?
+   - DOMAIN ACCURACY: Heavily penalize context_understanding if the candidate inappropriately forces wedding or ritual kinship terms ('Aachi', 'Arumaikkarar', 'Thamboolam') onto modern educational, college, or career queries.
 
 2. Social Appropriateness (0.0 - 1.0, 35% weight):
    - Strict adherence to honorifics ('vaanga/ponga' vs 'vaa/po', 'neenga' vs 'nee').
    - Respectful tone, culturally proper kinship address (Periyamma, Chithi, Mama, Athai).
-   - TANGLISH RAPPORT: Did the response match the user's conversational warmth while strictly avoiding dry slang dictionary lookups?
+   - TANGLISH RAPPORT & LANGUAGE LOCK: If the user query is in Tanglish, did the response maintain 100% conversational Tanglish rapport?
+   - Heavily penalize social_appropriateness and tanglish_rapport_score if the candidate abruptly bleeds into English headers (e.g. 'As per your culture, here is the customary process they follow:') or academic English sentences when the user query was in Tanglish.
 
 3. Regional Relevance (0.0 - 1.0, 35% weight):
    - Correct Tamil Nadu regional customs, authentic proverbs (Pazhamozhi), dietary norms.

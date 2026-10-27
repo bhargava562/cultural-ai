@@ -301,3 +301,59 @@ def test_mediated_generator_prompt_no_dry_dictionary(mock_llm):
     assert "Name & acknowledge the specific regional tradition" in prompt_sent
     assert "Validate why this practice is culturally normative" in prompt_sent
 
+
+@patch("src.pipeline.generator.generate_completion")
+def test_tanglish_college_decision_classification_and_headers(mock_llm):
+    """Test Tanglish college query classifies as Pan-Tamil Nadu and uses Tanglish headers."""
+    from src.pipeline.generator import MediatedResponseGenerator, detect_domain_category, detect_language_mode
+    from src.pipeline.interceptor import CulturalClassifier
+
+    mock_llm.return_value = "Detailed Tanglish response..."
+    gen = MediatedResponseGenerator()
+    classifier = CulturalClassifier()
+
+    query = "Machi college join panna yosikren da, epdi mudivu edukuradhu?"
+    assert detect_language_mode(query) == "Tanglish (Tamil in Latin script / Code-mixed)"
+    assert detect_domain_category(query) == "Education / Career"
+
+    profile = classifier.classify(query)
+    assert profile.sub_region == "Pan-Tamil Nadu / General"
+    assert "machi" in profile.slang_tokens_found
+    assert "da" in profile.slang_tokens_found
+    assert profile.matched_tradition_name == "Tamil Nadu College & Career Family Decision Process (Kudumba Mudivu & Seniors Vicharanai)"
+
+    res = gen.generate(query, profile, [{"content": "College selection is Kudumba Mudivu"}])
+    assert res == "Detailed Tanglish response..."
+
+    call_args = mock_llm.call_args[1]
+    prompt_sent = call_args["messages"][1]["content"]
+    assert "### 🌿 Namma Ooru Culture & Vazhakkam (Epdi Nadakkum-na):" in prompt_sent
+    assert "### 💡 Ippo Nee Try Panna Vendiya Steps:" in prompt_sent
+    assert "CRITICAL LANGUAGE LOCK RULE FOR TANGLISH" in prompt_sent
+
+
+def test_regional_slang_tier2_locking():
+    """Test that high-precision Tier 2 slang markers correctly lock sub-regions."""
+    guardrail = TamilSlangGuardrail()
+
+    # Kongu Nadu
+    p_kongu = guardrail.analyze_query("Yenunga, epdi irukeenga sowkiyama?")
+    assert p_kongu.detected_region == "Kongu Nadu"
+
+    # Madurai & Thekkathi
+    p_madurai = guardrail.analyze_query("Angittu poi parivattam katti thaai maaman seer seiyanum")
+    assert p_madurai.detected_region == "Madurai & Thekkathi"
+
+    # Kanyakumari / Nanjil Nadu
+    p_nanjil = guardrail.analyze_query("Makkale, kasavu pudavai katti avial virundhu saapidalam")
+    assert p_nanjil.detected_region == "Kanyakumari / Nanjil Nadu"
+
+    # Chennai / Madras Bashai
+    p_chennai = guardrail.analyze_query("Dei doulath ah suthuradhavitutu padi da")
+    assert p_chennai.detected_region == "Chennai / Madras Bashai"
+
+    # Cauvery Delta & Pudukkottai
+    p_delta = guardrail.analyze_query("Enga peravurani side la moi note ezhudhi kida virundhu poduvanga")
+    assert p_delta.detected_region == "Cauvery Delta & Pudukkottai"
+
+

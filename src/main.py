@@ -84,11 +84,17 @@ def mediate(request: MediateRequest) -> MediateResponse:
     if guardrail_result.get("detected_slangs") and not profile.slang_tokens_found:
         profile.slang_tokens_found = [s["slang"] for s in guardrail_result["detected_slangs"]]
 
+    from src.pipeline.generator import detect_language_mode
+
+    lang_mode = detect_language_mode(request.query)
+    is_tanglish = lang_mode == "Tanglish (Tamil in Latin script / Code-mixed)"
+
     practices: list[dict[str, Any]] = []
     if packet.get("matched_traditions"):
         for t in packet["matched_traditions"]:
+            exp = t.get("tanglish_process_explanation") if is_tanglish and t.get("tanglish_process_explanation") else t.get("little_tradition_reality", "")
             practices.append({
-                "content": f"{t['tradition_name']} ({t['region']}): {t['little_tradition_reality']} Guideline: {t['expected_explanation_guideline']}",
+                "content": f"{t['tradition_name']} ({t['region']}): {exp} Guideline: {t['expected_explanation_guideline']}",
                 "metadata": {"title": t["tradition_name"], "region": t["region"]},
             })
     retrieved = retriever.search(request.query, profile=profile, top_k=request.top_k)

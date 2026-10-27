@@ -4,9 +4,22 @@
     "region": "Kongu Nadu (Coimbatore, Erode, Tiruppur, Pollachi, Salem, Karur)",
     "dialect_name": "Kongu Tamil",
     "tanglish_slang_triggers": [
-      "avo", "ivo", "ekka", "emla", "ammini", "arasanikkal", "arumaikkarar", "kalyanam",
-      "saapteenghala", "solreenga", "enna kannu", "mangala vaazhai", "mangala vaazhthu",
-      "seer koodu", "coimbatore kalyanam", "kongu kalyanam"
+      "avo",
+      "ivo",
+      "ekka",
+      "emla",
+      "ammini",
+      "arasanikkal",
+      "arumaikkarar",
+      "kalyanam",
+      "saapteenghala",
+      "solreenga",
+      "enna kannu",
+      "mangala vaazhai",
+      "mangala vaazhthu",
+      "seer koodu",
+      "coimbatore kalyanam",
+      "kongu kalyanam"
     ],
     "tradition_name": "Arasanikkal & Arumaikkarar Wedding Tradition (Kongu Kalyanam)",
     "domain": "Marriage & Rituals",
@@ -23,16 +36,36 @@
       "3. The 'Thaai Maaman' (maternal uncle) brings the 'Seer Varisai' and escorts the bride/groom to the dais.",
       "4. Elders bless the 'Thali', the Arumaikkarar guides the ritual around the Arasanikkal, and the Pulavar recites the 'Mangala Vaazhthu' verses to seal the marriage."
     ],
-    "actionable_decision_advice": "Proceed confidently with the Arumaikkarar and Arasanikkal ceremony—it is the most respected, authentic wedding process in Kongu culture. Try these steps: First, visit your family's senior Arumaikkarar and Thaai Maaman in person with Thamboolam to fix their roles. Second, if non-local guests attend, briefly explain to them that the Arasanikkal represents living nature and ancestral witness."
+    "actionable_decision_advice": "Proceed confidently with the Arumaikkarar and Arasanikkal ceremony—it is the most respected, authentic wedding process in Kongu culture. Try these steps: First, visit your family's senior Arumaikkarar and Thaai Maaman in person with Thamboolam to fix their roles. Second, if non-local guests attend, briefly explain to them that the Arasanikkal represents living nature and ancestral witness.",
+    "tanglish_process_explanation": "Kongu Nadu kalyanathula iyer illama clan periyavaraana Arumaikkarar munnadi ninnu nadathuradhu Sangam kaalathu namma ooru vazhakkam. Agni kundathuku badhila pachai moongil matrum arasam kuchi sethu Arasanikkal nattu, Kambar ezhudhiya Mangala Vaazhthu paadi kalyanam mudipaanga. Idhu clan solidarity matrum nature-a witness-aa vechu nadakkura authentic Tamil sampradhayam.",
+    "tanglish_action_steps": [
+      "1. Unga ooru periyavaraana Arumaikkarar matrum Pulavar-a nerla poi thamboolam vechu invite pannunga.",
+      "2. Muhurthakkal nattu, stage naduvula Arasanikkal vechu manjal, paal, navadhanyam vechu vazhipadunga.",
+      "3. Thaai Maaman seer varisai kondu vandhu manamagal/manamagan-a kootitu varuvaaru.",
+      "4. Thali-a periyavanga aasirvaadham panni, Arumaikkarar Arasanikkal suthi Mangala Vaazhthu paadi kalyanam nadathi vaippaaru."
+    ]
   },
   {
     "id": "TN-MADURAI-001",
     "region": "Madurai & Thekkathi Belt (Madurai, Dindigul, Theni, Sivaganga, Ramnad, Virudhunagar)",
     "dialect_name": "Madurai / Thekkathi Tamil",
     "tanglish_slang_triggers": [
-      "angittu", "ingittu", "embuttu", "pangali", "thaai maaman", "maaman seer", "kaadhu kuthu",
-      "manjal neerattu", "seer", "thekkathi", "saami kida", "marudhu", "veechu", "kalatta",
-      "pachai koodaram", "parivattam"
+      "angittu",
+      "ingittu",
+      "embuttu",
+      "pangali",
+      "thaai maaman",
+      "maaman seer",
+      "kaadhu kuthu",
+      "manjal neerattu",
+      "seer",
+      "thekkathi",
+      "saami kida",
+      "marudhu",
+      "veechu",
+      "kalatta",
+      "pachai koodaram",
+      "parivattam"
     ],
     "tradition_name": "Thaai Maaman Seer & Parivattam Process (Lifecycle Rituals)",
     "domain": "Kinship & Family Obligations",
@@ -49,15 +82,31 @@
       "3. Lap Ritual ('Madiyil Vaithal'): During Kaadhu Kuthu, the child sits on the Thaai Maaman's lap while the ear is pierced; during Manjal Neerattu, the uncle weaves the ceremonial 'Pachai Koodaram' (green coconut frond hut) and presents the main garland.",
       "4. Parivattam & Virundhu: The sister's family honors the Thaai Maaman with a ceremonial shawl/towel ('Parivattam') before serving the communal feast ('Kida Virundhu')."
     ],
-    "actionable_decision_advice": "Honor the Thaai Maaman role wholeheartedly, as it cements lifelong family security ('Urimai'), while aligning the budget practically with your spouse. Try these steps: Sit down with your sister and spouse beforehand to agree on the exact gift items within your comfortable budget, focus on the ceremonial presentation (Seer Thattu, garland, and sitting on the lap), and fulfill the ritual with warmth."
+    "actionable_decision_advice": "Honor the Thaai Maaman role wholeheartedly, as it cements lifelong family security ('Urimai'), while aligning the budget practically with your spouse. Try these steps: Sit down with your sister and spouse beforehand to agree on the exact gift items within your comfortable budget, focus on the ceremonial presentation (Seer Thattu, garland, and sitting on the lap), and fulfill the ritual with warmth.",
+    "tanglish_process_explanation": "Madurai matrum Thekkathi pakkam Thaai Maaman nguradhu verum oru sondhakaarar illa, avar thaai veetu paadhukaapu matrum urimaiyoda adaiyaalam. Kaadhu kuthu appo maaman madiyila dhaan kozhandhaiya vechu kaadhu kuthuvaanga; manjal neerattu vizha la pachai koodaram katti seer thattu kondu varuvadhu avaroda murai. Idhu generation-aa thangachi kudumbathuku aadharava nirkura Dravidian kinship vazhakkam.",
+    "tanglish_action_steps": [
+      "1. Thaai Maaman veetuku nerla poi vetrilai paaku vechu formal-aa invite (Murai Vaithal) pannunga.",
+      "2. Thaai Maaman pattu, thanga thodu/modhiram, seer thattu kondu vandhu stage-ku varuvaaru.",
+      "3. Kaadhu kuthu na maaman madiyila kozhandhaiya vechu sadangu seiya vendum.",
+      "4. Maamanuku Parivattam (mariyadhai thundu) katti, kida virundhu pottu kooda irundhu gowravikka vendum."
+    ]
   },
   {
     "id": "TN-SOUTH-002",
     "region": "Pan-Tamil Nadu / Southern & Kongu Regions",
     "dialect_name": "General / Southern Tanglish",
     "tanglish_slang_triggers": [
-      "mama ponnu", "athai paiyan", "muraiponnu", "muraipaiyan", "murai kalyanam",
-      "uravumurai", "sondham", "moraponnu", "athai ponnu", "mama paiyan", "cross cousin"
+      "mama ponnu",
+      "athai paiyan",
+      "muraiponnu",
+      "muraipaiyan",
+      "murai kalyanam",
+      "uravumurai",
+      "sondham",
+      "moraponnu",
+      "athai ponnu",
+      "mama paiyan",
+      "cross cousin"
     ],
     "tradition_name": "Murai Kalyanam (Dravidian Cross-Cousin Marriage & Kinship Process)",
     "domain": "Kinship & Marriage",
@@ -74,15 +123,33 @@
       "3. 'Pariyam / Nichayathartham' between Siblings: The parents (brother and sister) exchange Thamboolam to formalize the alliance without adversarial dowry demands.",
       "4. Pre-Marital Medical Check: Many contemporary Tamil families also pair the traditional process with a routine pre-marital blood/genetic compatibility test."
     ],
-    "actionable_decision_advice": "If your family is proposing a Murai marriage (or if you are explaining it to outsiders), treat it as a respected Tamil kinship institution while prioritizing mutual consent and health. Try these steps: First, speak openly with your cousin to ensure both of you genuinely want the marriage without family pressure. Second, explain to non-South Indian friends that Dravidian kinship strictly separates Pangali (siblings) from Murai (cross-cousins). Third, do a standard pre-marital medical screening for peace of mind."
+    "actionable_decision_advice": "If your family is proposing a Murai marriage (or if you are explaining it to outsiders), treat it as a respected Tamil kinship institution while prioritizing mutual consent and health. Try these steps: First, speak openly with your cousin to ensure both of you genuinely want the marriage without family pressure. Second, explain to non-South Indian friends that Dravidian kinship strictly separates Pangali (siblings) from Murai (cross-cousins). Third, do a standard pre-marital medical screening for peace of mind.",
+    "tanglish_process_explanation": "South Indian Dravidian kinship-la Pangali (father brother / mother sister pillai = udanpirappu) vera, Murai (Mama Ponnu / Athai Paiyan = affinal partner) vera nu thelivaana uravumurai irukku. Murai kalyanam vazhiya kudumba sondham veliya pogama, sothu serndhu irukavum, ponnuku sondha veetla anbaana aadharavu kidaikavum namma periyavanga indha vazhakkatha vechaanga.",
+    "tanglish_action_steps": [
+      "1. Modhalla Mama Ponnu / Athai Paiyan kitta open-aa pesi, rendu perukkum kalyanam panna sammatham irukaa nu kandupidinga.",
+      "2. Kudumba periyavanga jadhagam matrum porutham paathu, thamboolam maathi Nichayathartham pannunga.",
+      "3. Modern science padi oru basic pre-marital genetic check-up pannikuradhu nalladhu."
+    ]
   },
   {
     "id": "TN-DELTA-001",
     "region": "Cauvery Delta & Pudukkottai / Sivaganga (Thanjavur, Pudukkottai, Karaikudi, Peravurani, Aranthangi)",
     "dialect_name": "Delta / Chettinad Tamil",
     "tanglish_slang_triggers": [
-      "moi virundhu", "moi note", "seeru", "aachi", "chettiar", "patham", "mutton kida",
-      "peravurani", "aranthangi", "moi ezhudhura", "pandal", "vasool", "panam", "kida virundhu"
+      "moi virundhu",
+      "moi note",
+      "seeru",
+      "aachi",
+      "chettiar",
+      "patham",
+      "mutton kida",
+      "peravurani",
+      "aranthangi",
+      "moi ezhudhura",
+      "pandal",
+      "vasool",
+      "panam",
+      "kida virundhu"
     ],
     "tradition_name": "Moi Virundhu (Reciprocal Community Feast & Interest-Free Capital Process)",
     "domain": "Banking, Economy & Community Solidarity",
@@ -99,15 +166,37 @@
       "3. Hosting the Feast ('Kida Virundhu'): Guests are welcomed with high hospitality and served a traditional mutton feast on banana leaves.",
       "4. Ledger Accounting & Receipt: Dedicated clerks record each guest's name, village, and cash contribution (returning previous Moi plus an increment, 'Rettippu Moi') so the host can reciprocate in future years."
     ],
-    "actionable_decision_advice": "If you belong to a Delta/Pudukkottai community network (or participate in a family Moi Virundhu), embrace it as a dignified, zero-interest mutual aid system. Try these steps: Always check your family's 'Moi Note' before attending so you return at least equal or slightly higher ('Seer Moi') than what that family gave yours. If raising capital locally outside the Moi belt, try a trusted neighborhood 'Seetu' (registered chit fund) or women's SHG ('Magalir Kuzhu') rather than high-interest informal loans."
+    "actionable_decision_advice": "If you belong to a Delta/Pudukkottai community network (or participate in a family Moi Virundhu), embrace it as a dignified, zero-interest mutual aid system. Try these steps: Always check your family's 'Moi Note' before attending so you return at least equal or slightly higher ('Seer Moi') than what that family gave yours. If raising capital locally outside the Moi belt, try a trusted neighborhood 'Seetu' (registered chit fund) or women's SHG ('Magalir Kuzhu') rather than high-interest informal loans.",
+    "tanglish_process_explanation": "Pudukkottai, Thanjavur (Peravurani, Aranthangi) side la Moi Virundhu nguradhu vaddi illama kedaikkura indigenous crowd-funding system. Bank loan kedaikaadha nerathula, oru kudumbam kida vettu virundhu pottu ooraye kooti moi ezhudhi cash raise pannuvaanga. Idhula vaangura panatha adutha varushangalil avanga moi virundhu vekkumbothu rettippu moi-aa thiruppi kodukka vendum. Idhu mutual trust matrum nambikkaiyoda namma makkal uruvaakina banking system.",
+    "tanglish_action_steps": [
+      "1. Unga veetu pazhaiya Moi Note eduthu yaaru yaaru ungalukku evvalavu moi ezhudhirukkanga nu check pannunga.",
+      "2. Moi virundhu pathirikkai print panni, ooru matrum sondhakarangaluku kudunga.",
+      "3. Traditional Kida Virundhu saapadu pottu, periyavangala vechu ledger-la thappu illama note pannunga.",
+      "4. Adutha vaatti avanga veetla virundhu vekkumbothu andha panatha kooda konjam sethu thiruppi ezhudha vendum."
+    ]
   },
   {
     "id": "TN-CHENNAI-001",
     "region": "Chennai / North Tamil Nadu (Madras Bashai)",
     "dialect_name": "Madras Bashai (Chennai Slang)",
     "tanglish_slang_triggers": [
-      "macha", "maamu", "bemaani", "kasmal", "gethu", "bejaar", "gaana", "marana gaana",
-      "naina", "vettaru", "galatta", "jalsa", "dhool", "daba", "saavu gaana", "parai", "paraiyattam"
+      "macha",
+      "maamu",
+      "bemaani",
+      "kasmal",
+      "gethu",
+      "bejaar",
+      "gaana",
+      "marana gaana",
+      "naina",
+      "vettaru",
+      "galatta",
+      "jalsa",
+      "dhool",
+      "daba",
+      "saavu gaana",
+      "parai",
+      "paraiyattam"
     ],
     "tradition_name": "Chennai Marana Gaana & Paraiyattam (Celebratory Farewell Process for Elders)",
     "domain": "Death Rituals & Urban Folk Culture",
@@ -124,15 +213,33 @@
       "3. 'Vaikkarisi Poduthal': Family members place soaked rice at the mouth of the departed, symbolizing gratitude for the food and life the elder provided.",
       "4. 'Karumathi / 16th Day Ninaivu': The family gathers on the 16th day to offer the elder's favorite foods ('Padaiyal') and feed the community."
     ],
-    "actionable_decision_advice": "When attending or organizing a traditional farewell for a lived elder in Chennai, respect the Parai and Gaana tribute as sacred emotional catharsis. Try these steps: Bring a garland and 'Kodi' cloth if you are close kin, stand with the family during the Vaikkarisi ritual, and explain to unfamiliar outsiders that celebrating an elder's completed life is a mark of deep gratitude in Tamil culture."
+    "actionable_decision_advice": "When attending or organizing a traditional farewell for a lived elder in Chennai, respect the Parai and Gaana tribute as sacred emotional catharsis. Try these steps: Bring a garland and 'Kodi' cloth if you are close kin, stand with the family during the Vaikkarisi ritual, and explain to unfamiliar outsiders that celebrating an elder's completed life is a mark of deep gratitude in Tamil culture.",
+    "tanglish_process_explanation": "North Chennai Madras Bashai culture-la periyavanga irandhutaa azhuthu oyaama, avanga vaazhkaiya celebrate panni vazhiyanuppa Marana Gaana matrum Paraiyattam aaduvaanga. Parai nguradhu namma tholisaikaruvi; gaana paatu vazhiya andha periyavangala patriyum avanga kashta-nashtangalayum paadi santhoshama anuppi vaippaanga. Idhu egalitarian subaltern grief processing vazhakkam.",
+    "tanglish_action_steps": [
+      "1. Periyavangaluku Kodi (pudhu thuni) matrum maalai pottu mariyadhai pannunga.",
+      "2. Parai melam matrum Gaana paadalgal moolama avanga nalla vaazhkaiya ninachu mariyadhai seiyunga.",
+      "3. Vaikkarisi pottu, 16-aam naal Ninaivu Padaiyal pottu oorukku saapadu pottu mudiyunga."
+    ]
   },
   {
     "id": "TN-NELLAI-001",
     "region": "Tirunelveli & Thoothukudi (Nellai / Thamirabarani Belt)",
     "dialect_name": "Nellai Tamil",
     "tanglish_slang_triggers": [
-      "elai", "annachi", "choli", "soli", "kodai vizha", "sudalai madan", "saamiattam",
-      "padaiyal", "suruttu", "aadu vettu", "kaniyan koothu", "magudam", "kaval deivam", "kula deivam"
+      "elai",
+      "annachi",
+      "choli",
+      "soli",
+      "kodai vizha",
+      "sudalai madan",
+      "saamiattam",
+      "padaiyal",
+      "suruttu",
+      "aadu vettu",
+      "kaniyan koothu",
+      "magudam",
+      "kaval deivam",
+      "kula deivam"
     ],
     "tradition_name": "Kodai Vizha & Kula Deivam Padaiyal Process (Ancestral Guardian Deity Worship)",
     "domain": "Religion, Purity & Ancestral Worship",
@@ -149,15 +256,33 @@
       "3. 'Pongal & Uchikala/Midnight Padaiyal': Women cook sweet/ven Pongal in front of the shrine, followed by the customary 'Padaiyal' (vegetarian on the main altar for Amman/Ayyanar, and non-vegetarian 'Kida Virundhu' for guardian deities like Sudalai Madan/Karuppasamy) on giant banana leaves.",
       "4. 'Banthi Virundhu & Thiruneeru Blessing': The oracle ('Saamiyadi') blesses the clan with sacred ash ('Thiruneeru'), and all Pangali families sit together to share the consecrated feast."
     ],
-    "actionable_decision_advice": "Follow your clan's exact Kula Deivam custom without comparing it to urban Agamic temple rules. Try these steps: Coordinate with your 'Pangali' elders to pay your 'Vari' (clan contribution), participate in cooking Pongal at the temple courtyard, receive the 'Thiruneeru' blessing from the Saamiyadi, and share the communal meal with your extended clan to keep ancestral ties strong."
+    "actionable_decision_advice": "Follow your clan's exact Kula Deivam custom without comparing it to urban Agamic temple rules. Try these steps: Coordinate with your 'Pangali' elders to pay your 'Vari' (clan contribution), participate in cooking Pongal at the temple courtyard, receive the 'Thiruneeru' blessing from the Saamiyadi, and share the communal meal with your extended clan to keep ancestral ties strong.",
+    "tanglish_process_explanation": "Tirunelveli matrum Thoothukudi la Sudalai Madan, Karuppasamy, Pechi Amman kovilgalil nadakkura Kodai Vizha namma munnorgal ana Kaval Deivangalukku seiyara vazhibadu. Oorai kaatha veeraruku aadu vettu, suruttu, padaiyal vechu Kaniyan Koothu (Maguda Aattam) paadi Saamiattam aadi aasirvaadham vaanguvaanga. Idhu Vedic Agamic sathvik rules-ku apparpattu namma mannin veerathai potrum Dravidian folk tradition.",
+    "tanglish_action_steps": [
+      "1. Pangali kooda serndhu Thalai Vari panam kuduthu, Kaappu katti thiruvizha arambinga.",
+      "2. Villu Paattu matrum Kaniyan Koothu paadumbodhu Saamiyadi munnadi ninnu kavalaiyai sollunga.",
+      "3. Mid-night padaiyal vechu aadu vettu kari virundhu saapittu, Saamiyadi kitta Thiruneeru aasirvaadham vaangunga."
+    ]
   },
   {
     "id": "TN-NANJIL-001",
     "region": "Kanyakumari (Nanjil Nadu)",
     "dialect_name": "Nanjil Nadu Tamil (Kanyakumari Slang)",
     "tanglish_slang_triggers": [
-      "makkale", "potti", "payal", "enthiru", "nanjil", "kalari", "kasavu", "avial",
-      "marumakkathayam", "thekkan", "choodu", "nalla chooda", "edey", "ulundhanchoru"
+      "makkale",
+      "potti",
+      "payal",
+      "enthiru",
+      "nanjil",
+      "kalari",
+      "kasavu",
+      "avial",
+      "marumakkathayam",
+      "thekkan",
+      "choodu",
+      "nalla chooda",
+      "edey",
+      "ulundhanchoru"
     ],
     "tradition_name": "Nanjil Nadu Wedding & Feast Process (Chera-Pandya Cultural Synthesis)",
     "domain": "Regional Identity, Food & Marriage",
@@ -173,14 +298,29 @@
       "2. 'Thali Kattu & Kuravai': Women sound the auspicious 'Kuravai' ululation as the Thali is tied.",
       "3. 'Nanjil Sadhya / Elai Virundhu': The feast is served on banana leaves featuring signature Nanjil dishes—Ulundhanchoru (black gram rice), Avial, Paruppu with ghee, Erissery, Pachadi, and multiple Payasams."
     ],
-    "actionable_decision_advice": "Embrace both the Tamil and Travancore elements of Nanjil Nadu heritage—they are historically yours. Try these steps: Include authentic Nanjil dishes like Ulundhanchoru and Avial in your feast menu, honor maternal elders during the Thali blessing, and proudly explain to guests from northern Tamil Nadu that Kanyakumari preserves the ancient Chera-Pandya cultural synthesis."
+    "actionable_decision_advice": "Embrace both the Tamil and Travancore elements of Nanjil Nadu heritage—they are historically yours. Try these steps: Include authentic Nanjil dishes like Ulundhanchoru and Avial in your feast menu, honor maternal elders during the Thali blessing, and proudly explain to guests from northern Tamil Nadu that Kanyakumari preserves the ancient Chera-Pandya cultural synthesis.",
+    "tanglish_process_explanation": "Kanyakumari Nanjil Nadu la Tamil Sangam paramparaiyum Travancore culture-um kalandhu irukku. Kasavu pudavai, thali kattumbothu pengal podum Kuravai oli, matrum banana leaf-la Ulundhanchoru, Avial, Theeyal, Payasam namma Nanjil virundhoda peruma. Pengaluku matriarchal sothurimai irundha perumai indha mannuku undu.",
+    "tanglish_action_steps": [
+      "1. Kalyana virundhula authentic Ulundhanchoru matrum Thengai Ennai Avial kandippa vaiyunga.",
+      "2. Thali kattum nerathula periyavanga pengal kitta Kuravai poda solli aasirvaadham vaangunga.",
+      "3. Kasavu matrum silk pudavai katti namma Travancore-Tamil kalachaaratha gowraviyunga."
+    ]
   },
   {
     "id": "TN-NILGIRIS-001",
     "region": "Nilgiris (Ooty, Kotagiri, Coonoor)",
     "dialect_name": "Badaga / Kota / Toda Hill Context",
     "tanglish_slang_triggers": [
-      "hatti", "hethai amman", "badaga", "kota", "toda", "kolumbu", "seeme", "mund", "dhodda", "hethai habba"
+      "hatti",
+      "hethai amman",
+      "badaga",
+      "kota",
+      "toda",
+      "kolumbu",
+      "seeme",
+      "mund",
+      "dhodda",
+      "hethai habba"
     ],
     "tradition_name": "Nilgiris Indigenous Kinship & Badaga Hethai Habba",
     "domain": "Indigenous Hill Traditions & Kinship",
@@ -196,15 +336,30 @@
       "2. Sacred Hill Pilgrimage: Walking barefoot to the ancestral Hethai shrine to honor nature and community solidarity.",
       "3. Community Feast ('Dhodda Habba Oota'): Sharing communal meals prepared in the village Hatti."
     ],
-    "actionable_decision_advice": "Respect the pristine simplicity of Badaga and Nilgiri hill customs. Try these steps: When visiting or taking part in Hethai Habba, dress respectfully in white, walk barefoot where customary, and appreciate the deep ecological reverence embedded in indigenous Nilgiri culture."
+    "actionable_decision_advice": "Respect the pristine simplicity of Badaga and Nilgiri hill customs. Try these steps: When visiting or taking part in Hethai Habba, dress respectfully in white, walk barefoot where customary, and appreciate the deep ecological reverence embedded in indigenous Nilgiri culture.",
+    "tanglish_process_explanation": "Nilgiris malaival makkalaana Badaga community-oda periya thiruvizha dhaan Hethai Habba. Thaai theivamana Hethai Amman-a kumbida pristine white unstitched thuni katti, seruppu illama kaalnadaiya poraanga. Idhu thookkamana nature mathippu matrum moral purity-oda adaiyaalam.",
+    "tanglish_action_steps": [
+      "1. Hethai Habba-ku poga velai unstitched thuni aninjukonga.",
+      "2. Malaigala suthumbodhu seruppu illama bakthiyoda kaalnadaiya ponga.",
+      "3. Hatti-la koodi Dhodda Habba virundhu saapittu kooda irundhu celebrate pannunga."
+    ]
   },
   {
     "id": "TN-CHETTINAD-001",
     "region": "Chettinad (Karaikudi, Devakottai, Kanadukathan, Pudukkottai)",
     "dialect_name": "Chettinad Tamil",
     "tanglish_slang_triggers": [
-      "aachi", "chettiar", "vattakai", "seer varisai", "kavuni arisi", "kandangi",
-      "petti", "kai murukku", "maragatha lingam", "nagarakkovil", "valavu"
+      "aachi",
+      "chettiar",
+      "vattakai",
+      "seer varisai",
+      "kavuni arisi",
+      "kandangi",
+      "petti",
+      "kai murukku",
+      "maragatha lingam",
+      "nagarakkovil",
+      "valavu"
     ],
     "tradition_name": "Chettinad Aachi Seer Varisai & Ancestral Padaippu Process",
     "domain": "Family, Trade & Culinary Culture",
@@ -221,16 +376,37 @@
       "3. 'Ancestral Padaippu': Before major milestones, the family lays out cooked delicacies on banana leaves in the central hall ('Valavu') to seek the blessings of ancestors ('Munnorgal').",
       "4. 'Kavuni Arisi Virundhu': Guests are served the signature Chettinad feast ending with sweet black glutinous rice ('Kavuni Arisi')."
     ],
-    "actionable_decision_advice": "Always consult the senior 'Aachi' of the family first when planning any Chettinad household ceremony. Try these steps: Perform the ancestral 'Padaippu' prayer before the main event, include traditional 'Kavuni Arisi' and 'Seepu Seedai' in the hospitality spread, and document gifts systematically as practiced in Nagarathar tradition."
+    "actionable_decision_advice": "Always consult the senior 'Aachi' of the family first when planning any Chettinad household ceremony. Try these steps: Perform the ancestral 'Padaippu' prayer before the main event, include traditional 'Kavuni Arisi' and 'Seepu Seedai' in the hospitality spread, and document gifts systematically as practiced in Nagarathar tradition.",
+    "tanglish_process_explanation": "Chettinad Nagarathar culture-la Aachi (matriarch) veetu nirvagathula periya sakthi. Kadal kadandhu vanigam panna poga, veetaiyum panathaiyum aachigal dhaan paathukittanga. Kalyanathula thara Seer Varisai (vessels, kitchenware) bride-oda Stridhana sothurimai. Avanga samayal Kalpasi, Maratti Mokku sethu gastro-digestive science-aa irukku.",
+    "tanglish_action_steps": [
+      "1. Veetla edhavadhu nalla vishesham na periya Aachi kitta modhalla kalandhu pesunga.",
+      "2. Visheshathukku munnadi Valavu veetla munnorgalukku Ancestral Padaippu podunga.",
+      "3. Kavuni Arisi, Kai Murukku, Seepu Seedai sethu traditional virundhu ready pannunga."
+    ]
   },
   {
     "id": "TN-HOSPITALITY-001",
     "region": "Pan-Tamil Nadu (Universal Cultural Value)",
     "dialect_name": "General Tamil / Tanglish",
     "tanglish_slang_triggers": [
-      "virundhombal", "thanneer", "saapittu ponga", "elai pottu", "panthi", "thamboolam",
-      "vetrilai paaku", "poittu varugiren", "kudumbam", "pongal", "invite", "relatives",
-      "pen paathal", "ponnu paaka", "valaikappu", "seemantham", "paal kaachuradhu", "grahapravesam"
+      "virundhombal",
+      "thanneer",
+      "saapittu ponga",
+      "elai pottu",
+      "panthi",
+      "thamboolam",
+      "vetrilai paaku",
+      "poittu varugiren",
+      "kudumbam",
+      "pongal",
+      "invite",
+      "relatives",
+      "pen paathal",
+      "ponnu paaka",
+      "valaikappu",
+      "seemantham",
+      "paal kaachuradhu",
+      "grahapravesam"
     ],
     "tradition_name": "Tamil Virundhombal, Neril Thamboolam Azhaippu & Household Ceremony Process",
     "domain": "Everyday Commonsense & Etiquette",
@@ -248,15 +424,38 @@
       "3. 'Immediate Thanneer & Unavu': When guests arrive at your home, immediately offer a tumbler of water ('Thanneer'), invite them to sit ('Vaanga, ukkarunga'), and insist they share a meal or coffee/tiffin ('Saapittu ponga').",
       "4. 'Auspicious Send-Off': Give returning guests Thamboolam/Manjal-Kumkumam, and bid farewell saying 'Poyittu vaanga' (go and return), never 'Poittu vaa'."
     ],
-    "actionable_decision_advice": "Follow the traditional Thamboolam and Virundhombal protocol to earn the goodwill and blessings of your elders. Try these steps: Visit your elders in person with Vetrilai-Paakku and fruits during Nalla Neram, address them with plural respect ('Neenga munnadi ninnu nadathi kodukanum'), serve them on a banana leaf with the tip pointing left, and send them off warmly with Thamboolam."
+    "actionable_decision_advice": "Follow the traditional Thamboolam and Virundhombal protocol to earn the goodwill and blessings of your elders. Try these steps: Visit your elders in person with Vetrilai-Paakku and fruits during Nalla Neram, address them with plural respect ('Neenga munnadi ninnu nadathi kodukanum'), serve them on a banana leaf with the tip pointing left, and send them off warmly with Thamboolam.",
+    "tanglish_process_explanation": "Tamil culture la Virundhombal dhaan thalaiyaana Aram. Veetuku yaaru vandhaalum modhalla thumbler-la thanneer kuduthu, vaanga ukkarunga, saapittu ponga nu kettu upasarikkiradhu dhaan namma vazhakkam. Periya vishesham, Pongal, kalyanam na phone-la solaama nerla poi Thamboolam (vetrilai, paakku, manjal, pazham) rendu kaiyala kuduthu periyavanga kaalula vizhundhu azhaikanum. Kilambumbothu po nu solla koodadhu, poyittu vaanga nu sollanum.",
+    "tanglish_action_steps": [
+      "1. Nalla Nerathula Thaai Maaman matrum Periyappa veetuku nerla ponga.",
+      "2. Rendu kaiyala Vetrilai Paakku, pazham plate-a vechu vanangi invite pannunga: Neenga munnadi ninnu nadathi tharanum.",
+      "3. Veetuku vandha guests-ku modhalla thanneer kuduthu, saapadu podama anuppadheenga.",
+      "4. Kilambura nerathula manjal-kumkumam kuduthu Poyittu vaanga nu solli anuppunga."
+    ]
   },
   {
     "id": "TN-CHENNAI-002",
     "region": "Chennai / North Tamil Nadu (Madras Bashai)",
     "dialect_name": "Madras Bashai (Chennai Street Slang & Peer Register)",
     "tanglish_slang_triggers": [
-      "doulath", "dowlath", "suthuradha", "suthuradhavitutu", "suthuradhu", "suthaadhe",
-      "vetti", "alaparai", "bemaani", "bejaar", "kasmal", "scene", "kalachify", "dei", "attagasam", "somberi", "machi", "macha"
+      "doulath",
+      "dowlath",
+      "suthuradha",
+      "suthuradhavitutu",
+      "suthuradhu",
+      "suthaadhe",
+      "vetti",
+      "alaparai",
+      "bemaani",
+      "bejaar",
+      "kasmal",
+      "scene",
+      "kalachify",
+      "dei",
+      "attagasam",
+      "somberi",
+      "machi",
+      "macha"
     ],
     "tradition_name": "Madras Bashai Peer Camaraderie & Candid Advice Process",
     "domain": "Urban Subculture, Slang & Peer Guidance",
@@ -273,15 +472,29 @@
       "2. Candid Reality Check: Use warm peer banter ('Dei machi, doulath ah suthuradha vitutu veetu nilaiya yosi da') to remind them of their career and parents' hard work.",
       "3. Shared Action / Study Support: Sit together to study, prepare for interviews, or share notes as equals."
     ],
-    "actionable_decision_advice": "Take peer advice in the warm spirit of Chennai brotherhood—when a friend says 'doulath ah suthuradha vitutu padi', they are looking out for your future. Try these steps: Acknowledge your friend warmly ('Sari da machi, correct ah sonna!'), drop distractions, and set a concrete daily study or career schedule together."
+    "actionable_decision_advice": "Take peer advice in the warm spirit of Chennai brotherhood—when a friend says 'doulath ah suthuradha vitutu padi', they are looking out for your future. Try these steps: Acknowledge your friend warmly ('Sari da machi, correct ah sonna!'), drop distractions, and set a concrete daily study or career schedule together.",
+    "tanglish_process_explanation": "Chennai Madras Bashai la dei, machi nu pesikuradhu deep camaraderie (thozhamai). Doulath na gethu, swagger kaatradhu. Oru nanban doulath-aa suthumbodhu, vera yaarum sollama machi dhaan dei doulath ah suthuradha vitutu padi da nu candid-aa advice pannuvaan. Formal polite filters illama orutharuku oruthar life-la munnukku vara help panradhu dhaan Chennai street brotherhood.",
+    "tanglish_action_steps": [
+      "1. Machi solra advice-a thappa edukaama, namma nalladhukku dhaan solraan nu purinjukonga.",
+      "2. Doulath-aa suthuradha vitutu innaiku padikira target-a fix pannunga.",
+      "3. Sayandhiram tea kadasila machi kitta pesi padicha portions-a review pannunga."
+    ]
   },
   {
     "id": "TN-KONGU-002",
     "region": "Kongu Nadu (Coimbatore, Erode, Tiruppur, Pollachi, Salem)",
     "dialect_name": "Kongu Tamil",
     "tanglish_slang_triggers": [
-      "yenunga", "enanga", "sowkiyama", "sowkkiyama", "saapteengala", "saapteenghala",
-      "solreenga", "enna kannu", "nalla irukkeengala", "arisi paruppu"
+      "yenunga",
+      "enanga",
+      "sowkiyama",
+      "sowkkiyama",
+      "saapteengala",
+      "saapteenghala",
+      "solreenga",
+      "enna kannu",
+      "nalla irukkeengala",
+      "arisi paruppu"
     ],
     "tradition_name": "Kongu 'Sowkiyama' Kinship Inquiry & Arisi Paruppu Hospitality Process",
     "domain": "Everyday Commonsense, Politeness & Kinship",
@@ -298,6 +511,99 @@
       "2. Holistic Kinship Inquiries: Ask after parents, harvest/work, and children using gentle affectionate terms ('Vela ellam sowkiyama pogudhungala?').",
       "3. Arisi Paruppu Sadham Hospitality: Prepare or accept signature quick Kongu hospitality dishes like Arisi Paruppu Sadham with ghee or freshly brewed filter coffee."
     ],
-    "actionable_decision_advice": "When interacting with Kongu relatives, match their warmth with unhurried polite greetings. Try these steps: Reply using '-nga' respectfully, inquire about their household's health before discussing work or requests, and warmly invite them to share a meal ('Saapittu ponga')."
+    "actionable_decision_advice": "When interacting with Kongu relatives, match their warmth with unhurried polite greetings. Try these steps: Reply using '-nga' respectfully, inquire about their household's health before discussing work or requests, and warmly invite them to share a meal ('Saapittu ponga').",
+    "tanglish_process_explanation": "Kongu Nadu la -nga potu pesuradhu formal distance illa, adhu kudumba anbu. Chinna pasangalukkum vaanganga, sollunganna nu mariyadhaiya dhaan pesuvaanga. Sowkiyama? nguradhu udambu, vela, vivasaayam ellame nalla irukka nu kekkura holistic inquiry. Vandha udaney Arisi Paruppu Sadham neiyodu pottu tharaadhadhu Kongu veedu illa.",
+    "tanglish_action_steps": [
+      "1. Kongu relatives pesumbothu -nga sethu mariyadhaiya badhil sollunga (Nalla irukken nga).",
+      "2. Vela visayam pesurathukku munnadi veetla ellarum sowkiyama nu kettu therinjukonga.",
+      "3. Veetuku vandhaa Arisi Paruppu Sadham illa filter coffee kuduthu upasarikkunga."
+    ]
+  },
+  {
+    "id": "TN-EDU-001",
+    "region": "Pan-Tamil Nadu (Universal Educational Culture)",
+    "dialect_name": "Pan-Tamil Nadu / Tanglish Youth",
+    "tanglish_slang_triggers": [
+      "college",
+      "admission",
+      "counselling",
+      "tnea",
+      "placement",
+      "engineering",
+      "arts",
+      "hostel",
+      "cutoff",
+      "arrear",
+      "padippu",
+      "exam",
+      "career",
+      "anna university",
+      "seat",
+      "course"
+    ],
+    "tradition_name": "Tamil Nadu College & Career Family Decision Process (Kudumba Mudivu & Seniors Vicharanai)",
+    "domain": "Education, College & Career",
+    "sample_tanglish_queries": [
+      "Machi, college join panna yosikren da, epdi mudivu edukuradhu?",
+      "Engineering vs Arts counselling la endha college select panradhu da machi?",
+      "Placement nalla irukura college epdi kandupidikiradhu, veetla epdi pesuradhu?"
+    ],
+    "great_tradition_misconception": "Western nuclear individualism assumes career and higher education choice is purely a student solo private decision with no family consultation, or treats parents guidance as oppressive interference.",
+    "little_tradition_reality": "In Tamil Nadu society, choosing a college or degree is a collective family milestone (Kudumba Mudivu). Parents often invest their life savings, gold, or take agricultural/education loans to fund education as the prime route for intergenerational mobility. Practical decisions balance Anna University/TNEA cutoffs, reliable placements, affordable fees, and hostel safety. Rather than commercial advertisements, families rely on first-hand inquiry from trusted seniors (terinja anna/akka) and educated relatives in that field.",
+    "expected_explanation_guideline": "Affirm that in Tamil culture, higher education is a joint family journey where parents hard work and student aspirations meet. Advise consulting real college alumni and seniors rather than trusting marketing brochures, and having open, respectful discussions with parents regarding budget, cutoffs, and placements.",
+    "customary_process_steps": [
+      "1. Cutoff & Budget Assessment: Analyze 12th marks/cutoff and sit with parents to understand realistic fee budget, scholarship options, or education loan eligibility.",
+      "2. Senior & Alumni Inquiry: Reach out to seniors (terinja anna/akka) from that specific college and department to get unfiltered truth about faculty, coding culture, and real placement track record.",
+      "3. Distance & Safety Review: Compare ooru pakkam (day-scholar) options against hostel facilities, discipline, and campus culture.",
+      "4. Unified Family Consensus: Sit with parents and close educated well-wishers to finalize TNEA/direct admission choices calmly without peer panic."
+    ],
+    "actionable_decision_advice": "Treat college selection as a team effort with your parents. Try these steps: First, list top 3-4 colleges based on your cutoff and verify real placement packages via alumni on LinkedIn or local networks. Second, talk transparently with parents about fees and hostel costs. Third, present your shortlisted preferences with confidence and respect.",
+    "tanglish_process_explanation": "Namma Tamil Nadu veetla college select panradhu verum single aalu edukkura decision illa, adhu motha kudumbathoda future-a maathura oru mukkiyamaana Kudumba Mudivu. Appa-Amma avanga uzhaippu matrum savings-a vechu dhaan namma kitta nambikkai vekkiraanga. Adhanaala cutoff, fees, placement, matrum hostel safety pathi namma oorla padicha terinja seniors (terinja anna/akka) kitta neradiya visaarichu mudivu edukkuradhu dhaan namma ooru vazhakkam.",
+    "tanglish_action_steps": [
+      "1. Un cutoff matrum interest-ku yetha 3-4 colleges shortlist panni, real placement matrum fees structure-a note pannu.",
+      "2. Andha college-la ippo padikira namma ooru anna/akka kitta nerla illana phone-la Placement and faculty epdi irukku na? nu unmaiyaana status-a kelu.",
+      "3. Veetla Appa-Amma kitta ukandhu, Appa, indha course-la placement nalla irukku, fees-um namma budget-ku set aagum nu open-aa pesi mudivu edu da machi!"
+    ]
+  },
+  {
+    "id": "TN-HEALTH-001",
+    "region": "Pan-Tamil Nadu (Universal Wellness Culture)",
+    "dialect_name": "Pan-Tamil Nadu / Tanglish Domestic",
+    "tanglish_slang_triggers": [
+      "kashayam",
+      "rasam",
+      "sukku malli",
+      "milagu",
+      "kollu",
+      "pathiyam",
+      "maruthuvam",
+      "paatti vaithiyam",
+      "sardi",
+      "irumal",
+      "fever",
+      "udambu",
+      "manjal paal"
+    ],
+    "tradition_name": "Tamil Household Paatti Vaithiyam & Pathiyam (Siddha Wellness)",
+    "domain": "Healthcare & Domestic Wellness",
+    "sample_tanglish_queries": [
+      "Romba sardi irumal ah irukku machi, veetla enna kashayam potu kudikalam?",
+      "Fever ku Tamil culture la enna pathiyam and paatti vaithiyam follow pannuvanga?"
+    ],
+    "great_tradition_misconception": "Assuming home remedies are primitive superstitions or completely ignoring evidence-based medical care.",
+    "little_tradition_reality": "Traditional Tamil domestic wellness is rooted in kitchen Siddha science (Unave Marundhu). First-line domestic care uses Sukku-Malli-Thippili Kashayam for chest congestion, Milagu Rasam for seasonal colds, and Manjal Paal for inflammation, alongside light diet (Pathiya Saapadu) like Idli or Kanji. For persistent high fever or serious illness, families immediately consult a qualified doctor.",
+    "expected_explanation_guideline": "Affirm kitchen Siddha wellness and Pathiyam as time-tested supportive domestic care, while advising consulting a physician if symptoms persist.",
+    "customary_process_steps": [
+      "1. First-line kitchen wellness: Prepare hot Sukku Malli Kashayam or Milagu Rasam for light seasonal symptoms.",
+      "2. Pathiya Saapadu: Eat easily digestible warm food (Kanchi, steamed Idli) and avoid heavy oily foods.",
+      "3. Medical consultation: If fever or symptoms last beyond 2 days, see a doctor without delay."
+    ],
+    "actionable_decision_advice": "Take traditional kitchen care alongside proper rest. Try these steps: Drink warm Sukku-Malli kashayam with palm jaggery, take warm Milagu rasam rice, and visit a doctor if fever doesnt subside.",
+    "tanglish_process_explanation": "Namma Tamil kalachaarathula Unave Marundhu dhaan adippadai. Sardi, irumal, fever vandha udaney namma paatti-amma Sukku Malli Kashayam, Milagu Rasam, Manjal Paal pottu tharuvanga. Koodave Pathiya Saapadu (kanji, idli) saaptu udambuku rest kudukkura vazhakkam undu. Symptoms continue aanaa doctor kitta kaaturadhum mukkiyam.",
+    "tanglish_action_steps": [
+      "1. Sukku, milagu, malli thatti pottu karuppatti sethu sooda kashayam kudinga.",
+      "2. Ennai, spicy food thavirthu warm kanji illa idli saapidunga.",
+      "3. 2 days mela fever irundhaa doctor kitta poi checkup pannikonga."
+    ]
   }
 ]

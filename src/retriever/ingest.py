@@ -151,11 +151,15 @@ def ingest_sample_docs(collection: chromadb.Collection) -> int:
                 t_id = t["id"]
                 steps = "\n".join(t.get("customary_process_steps", []))
                 advice = t.get("actionable_decision_advice", "")
+                tanglish_exp = t.get("tanglish_process_explanation", "")
+                tanglish_steps = "\n".join(t.get("tanglish_action_steps", []))
                 content = (
                     f"Tradition: {t['tradition_name']}.\n"
                     f"Region: {t['region']}.\n"
                     f"Cultural Context & Norm: {t['little_tradition_reality']}\n"
+                    f"Tanglish Process Explanation: {tanglish_exp}\n"
                     f"Customary Process Steps:\n{steps}\n"
+                    f"Tanglish Action Steps:\n{tanglish_steps}\n"
                     f"Actionable Decision & Practical Guidance: {advice}\n"
                     f"Misconception cleared: {t.get('great_tradition_misconception', '')}\n"
                     f"Tanglish triggers: {', '.join(t.get('tanglish_slang_triggers', []))}"
