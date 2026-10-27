@@ -32,6 +32,22 @@ def normalize_provider_model(model: Optional[str]) -> Optional[str]:
     return model
 
 
+def build_spoken_script(markdown_text: str) -> str:
+    """Clean markdown formatting into a natural spoken script for Kiosk TTS and subtitles."""
+    cleaned = re.sub(r"```[\s\S]*?```", "", markdown_text)
+    cleaned = re.sub(r"^#{1,6}\s*", "", cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r"\*\*([^*]+)\*\*", r"\1", cleaned)
+    cleaned = re.sub(r"\*([^*]+)\*", r"\1", cleaned)
+    cleaned = re.sub(r"^\s*[-*•]\s+", "", cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r"^\s*\d+\.\s+", "", cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r"[🏛️✅🌿✨🎯💡]", "", cleaned)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    # Keep first 4-5 sentences so kiosk speech is punchy and natural
+    sentences = re.split(r"(?<=[.!?])\s+", cleaned)
+    script = " ".join(sentences[:5]).strip()
+    return script or cleaned
+
+
 class MediateRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=8000)
     model: Optional[str] = None
@@ -44,6 +60,7 @@ class MediateResponse(BaseModel):
     mediated_response: str
     conversational_response: Optional[str] = None
     cultural_insights: Optional[str] = None
+    spoken_response: Optional[str] = None
     evaluation_scores: dict[str, Any]
     guardrail: dict[str, Any]
 
@@ -120,12 +137,15 @@ def mediate(request: MediateRequest) -> MediateResponse:
     # Strip any leading 'PART 1...' or '**PART 1...' markers from the conversational reply
     conversational_part = re.sub(r"^\*{0,2}PART\s*1[^\n]*\*{0,2}\s*", "", conversational_part, flags=re.IGNORECASE).strip()
 
+    spoken_script = build_spoken_script(conversational_part)
+
     return MediateResponse(
         cultural_profile=profile.model_dump(),
         retrieved_practices=practices,
         mediated_response=response,
         conversational_response=conversational_part,
         cultural_insights=cultural_insights_part,
+        spoken_response=spoken_script,
         evaluation_scores={"CAS": evaluation.alignment_score, **evaluation.model_dump()},
         guardrail=guardrail_result,
     )
