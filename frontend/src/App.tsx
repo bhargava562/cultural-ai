@@ -89,17 +89,7 @@ function detectLanguage(text: string): Language {
 
 function App() {
   const [viewMode, setViewMode] = useState<'chat' | 'kiosk'>('chat')
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      role: 'assistant',
-      language: 'English',
-      content:
-        'Vanakkam! Ask any question about family customs, weddings, rituals, or community decisions in Tamil, Tanglish, or English.',
-      spokenText:
-        'Vanakkam! Ask any question about family customs, weddings, rituals, or community decisions in Tamil, Tanglish, or English.',
-    },
-  ])
+  const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -121,9 +111,9 @@ function App() {
   const recognitionRef = useRef<any>(null)
   const wordTimerRef = useRef<number | null>(null)
 
-  // Isolated auto-scroll on new messages; does NOT scroll window or topbar
+  // Isolated auto-scroll when new messages arrive
   useEffect(() => {
-    if (messages.length > 1 && conversationRef.current) {
+    if (messages.length > 0 && conversationRef.current) {
       conversationRef.current.scrollTo({
         top: conversationRef.current.scrollHeight,
         behavior: 'smooth',
@@ -369,17 +359,7 @@ function App() {
 
   const clearChat = () => {
     stopSpeaking()
-    setMessages([
-      {
-        id: Date.now(),
-        role: 'assistant',
-        language: 'English',
-        content:
-          'New conversation ready. Ask any question about family customs, weddings, rituals, or community decisions in Tamil, Tanglish, or English.',
-        spokenText:
-          'New conversation ready. Ask any question about family customs, weddings, rituals, or community decisions in Tamil, Tanglish, or English.',
-      },
-    ])
+    setMessages([])
     setSubtitleText('New conversation ready. Tap the mic or type below.')
     setSidebarOpen(false)
   }
@@ -404,25 +384,13 @@ function App() {
         </div>
 
         <button className="new-chat" onClick={clearChat}>
-          <Plus size={16} /> New conversation <span>⌘ K</span>
+          <Plus size={16} /> New chat <span>⌘ K</span>
         </button>
 
         <div className="sidebar-section">
-          <span>Interaction Mode</span>
-          <button
-            className={`history-item ${viewMode === 'chat' ? 'active' : ''}`}
-            onClick={() => {
-              stopSpeaking()
-              setViewMode('chat')
-            }}
-          >
-            <MessageSquare size={14} /> Chatbot Mode
-          </button>
-          <button
-            className={`history-item ${viewMode === 'kiosk' ? 'active' : ''}`}
-            onClick={() => setViewMode('kiosk')}
-          >
-            <MonitorSpeaker size={14} /> Interactive Kiosk Mode
+          <span>Recent</span>
+          <button className="history-item active" onClick={clearChat}>
+            <MessageSquare size={14} /> New conversation
           </button>
         </div>
 
@@ -473,7 +441,7 @@ function App() {
               {viewMode === 'kiosk' ? (
                 <>
                   <MessageSquare size={14} />
-                  <span>Switch to Chatbot</span>
+                  <span>Switch to Chat</span>
                 </>
               ) : (
                 <>
@@ -628,76 +596,79 @@ function App() {
             </div>
           </div>
         ) : (
-          /* ================= STANDARD CHATBOT MODE ================= */
+          /* ================= STANDARD CHATBOT MODE (ChatGPT UI) ================= */
           <>
             <div className="conversation" ref={conversationRef}>
               <div className="conversation-inner">
-                <div className="messages" aria-live="polite">
-                  {messages.map((message) => (
-                    <article className={`message-row ${message.role}`} key={message.id}>
-                      <div className={`message-avatar ${message.role}`}>
-                        {message.role === 'assistant' ? <Bot size={17} /> : <UserRound size={16} />}
-                      </div>
-                      <div className="message-content">
-                        <div className="message-meta">
-                          <span>{message.role === 'assistant' ? 'nalla.ai' : 'You'}</span>
-                          {message.language && <span className="language-tag">{message.language}</span>}
+                {messages.length === 0 ? (
+                  <div className="empty-chat-hero">
+                    <h2>What cultural decision can I help you with today?</h2>
+                    <div className="starter-grid">
+                      {starterPrompts.map((prompt) => (
+                        <button key={prompt} onClick={() => void submitQuery(prompt)}>
+                          <span>{prompt}</span>
+                          <ArrowUp size={14} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="messages" aria-live="polite">
+                    {messages.map((message) => (
+                      <article className={`message-row ${message.role}`} key={message.id}>
+                        <div className={`message-avatar ${message.role}`}>
+                          {message.role === 'assistant' ? <Bot size={17} /> : <UserRound size={16} />}
                         </div>
-                        <div className={`message-bubble ${message.error ? 'error-bubble' : ''}`}>
-                          {message.role === 'assistant' ? (
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
-                          ) : (
-                            <p>{message.content}</p>
+                        <div className="message-content">
+                          <div className="message-meta">
+                            <span>{message.role === 'assistant' ? 'nalla.ai' : 'You'}</span>
+                            {message.language && <span className="language-tag">{message.language}</span>}
+                          </div>
+                          <div className={`message-bubble ${message.error ? 'error-bubble' : ''}`}>
+                            {message.role === 'assistant' ? (
+                              <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
+                            ) : (
+                              <p>{message.content}</p>
+                            )}
+                          </div>
+                          {message.role === 'assistant' && !message.error && (
+                            <div className="message-actions">
+                              <button onClick={() => copyMessage(message)}>
+                                {copiedId === message.id ? <Check size={13} /> : <Copy size={13} />}{' '}
+                                {copiedId === message.id ? 'Copied' : 'Copy'}
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setViewMode('kiosk')
+                                  speakResponse(message.spokenText || message.content, message.language)
+                                }}
+                              >
+                                <Volume2 size={13} /> Speak in Kiosk
+                              </button>
+                            </div>
                           )}
                         </div>
-                        {message.role === 'assistant' && !message.error && (
-                          <div className="message-actions">
-                            <button onClick={() => copyMessage(message)}>
-                              {copiedId === message.id ? <Check size={13} /> : <Copy size={13} />}{' '}
-                              {copiedId === message.id ? 'Copied' : 'Copy'}
-                            </button>
-                            <button
-                              onClick={() => {
-                                setViewMode('kiosk')
-                                speakResponse(message.spokenText || message.content, message.language)
-                              }}
-                            >
-                              <Volume2 size={13} /> Speak in Kiosk
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </article>
-                  ))}
-
-                  {isLoading && (
-                    <article className="message-row assistant">
-                      <div className="message-avatar assistant">
-                        <Bot size={17} />
-                      </div>
-                      <div className="message-content">
-                        <div className="message-meta">
-                          <span>nalla.ai</span>
-                          <span className="language-tag">thinking</span>
-                        </div>
-                        <div className="message-bubble loading-bubble">
-                          <span />
-                          <span />
-                          <span />
-                        </div>
-                      </div>
-                    </article>
-                  )}
-                </div>
-
-                {messages.length === 1 && (
-                  <div className="starter-grid">
-                    {starterPrompts.map((prompt) => (
-                      <button key={prompt} onClick={() => setInput(prompt)}>
-                        {prompt}
-                        <ArrowUp size={14} />
-                      </button>
+                      </article>
                     ))}
+
+                    {isLoading && (
+                      <article className="message-row assistant">
+                        <div className="message-avatar assistant">
+                          <Bot size={17} />
+                        </div>
+                        <div className="message-content">
+                          <div className="message-meta">
+                            <span>nalla.ai</span>
+                            <span className="language-tag">thinking</span>
+                          </div>
+                          <div className="message-bubble loading-bubble">
+                            <span />
+                            <span />
+                            <span />
+                          </div>
+                        </div>
+                      </article>
+                    )}
                   </div>
                 )}
               </div>

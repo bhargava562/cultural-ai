@@ -516,11 +516,30 @@
   }
 }
 
+.empty-chat-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 52vh;
+  text-align: center;
+  padding: 30px 10px 10px;
+}
+
+.empty-chat-hero h2 {
+  font-size: clamp(23px, 3.2vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+  margin: 0 0 26px;
+}
+
 .starter-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-top: 20px;
+  width: 100%;
+  margin-top: 12px;
 }
 
 .starter-grid button {
