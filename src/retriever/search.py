@@ -41,7 +41,15 @@ class CulturalRetriever:
             # A sparse local corpus should still return semantically useful facts.
             kwargs.pop("where", None)
             results = self.collection.query(**kwargs)
-        return _results_to_snippets(results)
+        snippets = _results_to_snippets(results)
+        if not snippets and where:
+            kwargs.pop("where", None)
+            try:
+                results = self.collection.query(**kwargs)
+                snippets = _results_to_snippets(results)
+            except Exception:
+                pass
+        return snippets
 
 
 def _results_to_snippets(results: dict[str, Any]) -> list[dict[str, Any]]:

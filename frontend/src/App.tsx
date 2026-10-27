@@ -11,7 +11,7 @@ type Message = { id: number; role: Role; content: string; language?: Language; e
 
 const MODEL = import.meta.env.VITE_GROQ_MODEL || 'openai/gpt-oss-120b'
 const API_KEY = import.meta.env.VITE_GROQ_API_KEY
-const MEDIATOR_API_URL = import.meta.env.VITE_MEDIATOR_API_URL
+const MEDIATOR_API_URL = import.meta.env.VITE_MEDIATOR_API_URL || 'http://127.0.0.1:8000'
 const starterPrompts = ['How should I invite my elder relatives for Pongal?', 'Explain the difference between vaanga and vaa.', 'Help me write a warm Tanglish message for my akka.']
 
 const SYSTEM_PROMPT = `You are the Cultural Alignment Layer: a careful, warm, and highly capable assistant for Tamil, Tanglish, and Indian English conversations.
@@ -101,32 +101,6 @@ function App() {
   const clearChat = () => { setMessages([{ id: Date.now(), role: 'assistant', language: 'English', content: 'New conversation ready. What would you like to explore?' }]); setSidebarOpen(false) }
 
   const renderAssistantContent = (content: string) => {
-    const dividerRegex = /\n\s*---\s*\n/
-    const match = content.match(dividerRegex)
-    if (match && match.index !== undefined) {
-      const conversationalPart = content.slice(0, match.index).trim()
-      const culturalPart = content.slice(match.index + match[0].length).trim()
-      return (
-        <div className="assistant-structured-response">
-          {conversationalPart && (
-            <div className="conversational-body">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{conversationalPart}</ReactMarkdown>
-            </div>
-          )}
-          {culturalPart && (
-            <div className="cultural-context-card">
-              <div className="cultural-card-header">
-                <Sparkles size={13} />
-                <span>Cultural Context & State Detection</span>
-              </div>
-              <div className="cultural-card-body">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{culturalPart}</ReactMarkdown>
-              </div>
-            </div>
-          )}
-        </div>
-      )
-    }
     return <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
   }
 

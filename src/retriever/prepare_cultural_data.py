@@ -128,10 +128,13 @@ def prepare_dataset(input_dir: str | Path, output_dir: str | Path = PROCESSED_DI
                         t_reality = record.get("little_tradition_reality", "")
                         t_guide = record.get("expected_explanation_guideline", "")
                         t_domain = record.get("domain", "Everyday Commonsense")
+                        steps = "\n".join(record.get("customary_process_steps", []))
+                        advice = record.get("actionable_decision_advice", "")
                         chunk = (
                             f"Tradition: {t_name}. Region: {t_reg}. "
                             f"Cultural Context & Norm: {t_reality} "
-                            f"Guideline: {t_guide}"
+                            f"Customary Process Steps: {steps} "
+                            f"Decision & Practical Guidance: {advice}"
                         )
                         knowledge.write(
                             json.dumps(

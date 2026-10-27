@@ -149,11 +149,14 @@ def ingest_sample_docs(collection: chromadb.Collection) -> int:
                 traditions = json.load(f)
             for t in traditions:
                 t_id = t["id"]
+                steps = "\n".join(t.get("customary_process_steps", []))
+                advice = t.get("actionable_decision_advice", "")
                 content = (
                     f"Tradition: {t['tradition_name']}.\n"
                     f"Region: {t['region']}.\n"
-                    f"Cultural Context: {t['little_tradition_reality']}\n"
-                    f"Guideline: {t['expected_explanation_guideline']}\n"
+                    f"Cultural Context & Norm: {t['little_tradition_reality']}\n"
+                    f"Customary Process Steps:\n{steps}\n"
+                    f"Actionable Decision & Practical Guidance: {advice}\n"
                     f"Misconception cleared: {t.get('great_tradition_misconception', '')}\n"
                     f"Tanglish triggers: {', '.join(t.get('tanglish_slang_triggers', []))}"
                 )
