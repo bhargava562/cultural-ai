@@ -100,9 +100,7 @@ function App() {
   const [isListening, setIsListening] = useState(false)
   const [voiceLocale, setVoiceLocale] = useState<'en-IN' | 'ta-IN'>('en-IN')
   const [autoSpeak, setAutoSpeak] = useState(true)
-  const [subtitleText, setSubtitleText] = useState(
-    'Vanakkam! Tap the microphone to speak or type your question below.'
-  )
+  const [subtitleText, setSubtitleText] = useState('Vanakkam!')
   const [currentWord, setCurrentWord] = useState('')
   const [spokenCharIndex, setSpokenCharIndex] = useState<number>(0)
   const [showFullDetails, setShowFullDetails] = useState(false)
@@ -360,7 +358,7 @@ function App() {
   const clearChat = () => {
     stopSpeaking()
     setMessages([])
-    setSubtitleText('New conversation ready. Tap the mic or type below.')
+    setSubtitleText('Vanakkam!')
     setSidebarOpen(false)
   }
 
@@ -560,14 +558,7 @@ function App() {
               )}
             </div>
 
-            {/* Kiosk Quick Starter Chips */}
-            <div className="kiosk-starters">
-              {starterPrompts.map((prompt) => (
-                <button key={prompt} type="button" onClick={() => void submitQuery(prompt)}>
-                  {prompt}
-                </button>
-              ))}
-            </div>
+
 
             {/* Dual Voice + Word Input Dock */}
             <div className="kiosk-input-dock">
