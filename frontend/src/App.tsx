@@ -8,7 +8,6 @@ import {
   Check,
   ChevronDown,
   Copy,
-  Globe2,
   Menu,
   MessageSquare,
   Mic,
@@ -96,9 +95,9 @@ function App() {
       role: 'assistant',
       language: 'English',
       content:
-        "Vanakkam! I'm your cultural process & decision companion. Ask me any cultural question in Tamil, Tanglish, or English—or switch to **Kiosk Mode** to speak with our interactive character!",
+        'Vanakkam! Ask any question about family customs, weddings, rituals, or community decisions in Tamil, Tanglish, or English.',
       spokenText:
-        'Vanakkam! Ask me any cultural question by voice or text, and I will guide you through our customary process and what steps to try.',
+        'Vanakkam! Ask any question about family customs, weddings, rituals, or community decisions in Tamil, Tanglish, or English.',
     },
   ])
   const [input, setInput] = useState('')
@@ -118,12 +117,18 @@ function App() {
   const [spokenCharIndex, setSpokenCharIndex] = useState<number>(0)
   const [showFullDetails, setShowFullDetails] = useState(false)
 
-  const endRef = useRef<HTMLDivElement>(null)
+  const conversationRef = useRef<HTMLDivElement>(null)
   const recognitionRef = useRef<any>(null)
   const wordTimerRef = useRef<number | null>(null)
 
+  // Isolated auto-scroll on new messages; does NOT scroll window or topbar
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 1 && conversationRef.current) {
+      conversationRef.current.scrollTo({
+        top: conversationRef.current.scrollHeight,
+        behavior: 'smooth',
+      })
+    }
   }, [messages, isLoading])
 
   // Cleanup speech synthesis and timers on unmount
@@ -180,7 +185,6 @@ function App() {
       setCurrentWord(activeWord)
     }
 
-    // Fallback syllable/word timer if browser TTS voice doesn't emit onboundary events
     let wordIdx = 0
     wordTimerRef.current = window.setInterval(() => {
       if (!boundaryFired && wordIdx < words.length) {
@@ -272,7 +276,7 @@ function App() {
     setInput('')
     setIsLoading(true)
     setAvatarState('thinking')
-    setSubtitleText('Consulting Tamil regional traditions and preparing your guidance...')
+    setSubtitleText('Consulting traditions and preparing guidance...')
 
     try {
       let answer = ''
@@ -371,9 +375,9 @@ function App() {
         role: 'assistant',
         language: 'English',
         content:
-          'New conversation ready. What cultural custom or decision would you like to explore?',
+          'New conversation ready. Ask any question about family customs, weddings, rituals, or community decisions in Tamil, Tanglish, or English.',
         spokenText:
-          'New conversation ready. What cultural custom or decision would you like to explore?',
+          'New conversation ready. Ask any question about family customs, weddings, rituals, or community decisions in Tamil, Tanglish, or English.',
       },
     ])
     setSubtitleText('New conversation ready. Tap the mic or type below.')
@@ -391,7 +395,7 @@ function App() {
       <aside className={`sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-brand">
           <div className="brand-mark">
-            <Sparkles size={17} />
+            <Sparkles size={16} />
           </div>
           <span>nalla.ai</span>
           <button className="icon-button mobile-close" onClick={() => setSidebarOpen(false)} aria-label="Close menu">
@@ -400,7 +404,7 @@ function App() {
         </div>
 
         <button className="new-chat" onClick={clearChat}>
-          <Plus size={17} /> New conversation <span>⌘ K</span>
+          <Plus size={16} /> New conversation <span>⌘ K</span>
         </button>
 
         <div className="sidebar-section">
@@ -427,7 +431,7 @@ function App() {
             <span className="status-dot" />
             <span>
               <strong>Alignment layer</strong>
-              <small>{viewMode === 'kiosk' ? 'Kiosk Avatar Active' : 'Chatbot Ready'}</small>
+              <small>{viewMode === 'kiosk' ? 'Kiosk Active' : 'Ready'}</small>
             </span>
           </div>
           <div className="model-chip">
@@ -469,7 +473,7 @@ function App() {
               {viewMode === 'kiosk' ? (
                 <>
                   <MessageSquare size={14} />
-                  <span>Switch to Chatbot Mode</span>
+                  <span>Switch to Chatbot</span>
                 </>
               ) : (
                 <>
@@ -482,7 +486,7 @@ function App() {
               <span className="status-dot" /> Live
             </span>
             <button className="avatar" aria-label="Profile">
-              <UserRound size={17} />
+              <UserRound size={16} />
             </button>
           </div>
         </header>
@@ -519,7 +523,7 @@ function App() {
                   }}
                 >
                   {autoSpeak ? <Volume2 size={14} /> : <VolumeX size={14} />}
-                  <span>{autoSpeak ? 'Voice Output ON' : 'Voice Muted'}</span>
+                  <span>{autoSpeak ? 'Audio ON' : 'Audio Muted'}</span>
                 </button>
 
                 {avatarState === 'speaking' ? (
@@ -540,7 +544,7 @@ function App() {
                       }
                     >
                       <RotateCcw size={13} />
-                      <span>Replay Speech</span>
+                      <span>Replay</span>
                     </button>
                   )
                 )}
@@ -549,7 +553,7 @@ function App() {
 
             {latestUserMessage && (
               <div className="kiosk-user-prompt-banner">
-                <span>You asked:</span> “{latestUserMessage.content}”
+                <span>Query:</span> “{latestUserMessage.content}”
               </div>
             )}
 
@@ -558,7 +562,7 @@ function App() {
 
             {/* Live Subtitle Teleprompter Box */}
             <div className="kiosk-subtitle-box" aria-live="polite">
-              <div className="subtitle-label">LIVE CHARACTER SUBTITLES</div>
+              <div className="subtitle-label">LIVE SUBTITLES</div>
               <p className="subtitle-text">
                 {avatarState === 'speaking' && spokenCharIndex > 0 ? (
                   <>
@@ -574,8 +578,8 @@ function App() {
                 <div className="kiosk-details-toggle">
                   <button type="button" onClick={() => setShowFullDetails((v) => !v)}>
                     {showFullDetails
-                      ? 'Hide Full Step-by-Step Cultural Process ▲'
-                      : 'View Full Step-by-Step Cultural Process ▼'}
+                      ? 'Hide Full Cultural Process Steps ▲'
+                      : 'View Full Cultural Process Steps ▼'}
                   </button>
                   {showFullDetails && (
                     <div className="kiosk-full-markdown">
@@ -605,7 +609,7 @@ function App() {
                 onClick={toggleVoiceInput}
                 aria-label={isListening ? 'Stop voice input' : 'Start voice input'}
               >
-                {isListening ? <MicOff size={22} /> : <Mic size={22} />}
+                {isListening ? <MicOff size={20} /> : <Mic size={20} />}
                 <span>{isListening ? 'Listening...' : 'Tap to Speak'}</span>
               </button>
 
@@ -614,7 +618,7 @@ function App() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Or type your question in Tanglish, Tamil, or English..."
+                  placeholder="Ask in Tanglish, Tamil, or English..."
                   aria-label="Kiosk text input"
                 />
                 <button type="submit" className="send-button" disabled={!input.trim() || isLoading}>
@@ -626,22 +630,8 @@ function App() {
         ) : (
           /* ================= STANDARD CHATBOT MODE ================= */
           <>
-            <div className="conversation">
+            <div className="conversation" ref={conversationRef}>
               <div className="conversation-inner">
-                <div className="welcome-block">
-                  <div className="welcome-icon">
-                    <Globe2 size={23} />
-                  </div>
-                  <p className="eyebrow">CULTURAL ALIGNMENT LAYER</p>
-                  <h1>
-                    Conversations with <em>context.</em>
-                  </h1>
-                  <p className="welcome-copy">
-                    A thoughtful assistant that explains the customary process in your culture and gives actionable
-                    steps to try.
-                  </p>
-                </div>
-
                 <div className="messages" aria-live="polite">
                   {messages.map((message) => (
                     <article className={`message-row ${message.role}`} key={message.id}>
@@ -698,7 +688,6 @@ function App() {
                       </div>
                     </article>
                   )}
-                  <div ref={endRef} />
                 </div>
 
                 {messages.length === 1 && (
@@ -734,16 +723,15 @@ function App() {
                 </button>
               </form>
               <p className="composer-note">
-                <Sparkles size={12} /> Responses adapt to your language and cultural context <span>·</span> Shift + Enter
-                for a new line
+                Enter to send <span>·</span> Shift + Enter for new line
               </p>
             </div>
           </>
         )}
 
         <footer className="app-footer">
-          <span>Built for better understanding.</span>
-          <span>nalla.ai · Chatbot & Interactive Kiosk</span>
+          <span>nalla.ai</span>
+          <span>Cultural Decision Assistant</span>
         </footer>
       </section>
     </main>
