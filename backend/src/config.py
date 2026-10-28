@@ -19,12 +19,21 @@ elif (BASE_DIR.parent / ".env").exists():
 else:
     load_dotenv()
 
+import os
+# Auto-fallback to GROQ_API_KEY_1 if GROQ_API_KEY is not explicitly defined
+if not os.getenv("GROQ_API_KEY"):
+    _fallback_groq = os.getenv("GROQ_API_KEY_1") or os.getenv("GROQ_API_KEY_2")
+    if _fallback_groq:
+        os.environ["GROQ_API_KEY"] = _fallback_groq.strip().strip('"').strip("'")
+
 
 class Settings(BaseSettings):
     """Application settings with environment variable bindings."""
 
     # API Keys (Free-tier providers)
     groq_api_key: Optional[str] = Field(default=None, alias="GROQ_API_KEY")
+    groq_api_key_1: Optional[str] = Field(default=None, alias="GROQ_API_KEY_1")
+    groq_api_key_2: Optional[str] = Field(default=None, alias="GROQ_API_KEY_2")
     gemini_api_key: Optional[str] = Field(default=None, alias="GEMINI_API_KEY")
     openrouter_api_key: Optional[str] = Field(default=None, alias="OPENROUTER_API_KEY")
 

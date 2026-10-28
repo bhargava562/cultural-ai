@@ -38,7 +38,6 @@ type Message = {
 }
 
 const MODEL = import.meta.env.VITE_GROQ_MODEL || 'openai/gpt-oss-120b'
-const API_KEY = import.meta.env.VITE_GROQ_API_KEY
 const MEDIATOR_API_URL = import.meta.env.VITE_MEDIATOR_API_URL || 'http://127.0.0.1:8000'
 
 const starterPrompts = [
@@ -46,13 +45,6 @@ const starterPrompts = [
   'En thangachi payanuku kaadhu kuthu function, thaai maaman seer epdi pannanum?',
   'Moi virundhu la epdi participate panradhu?',
 ]
-
-const SYSTEM_PROMPT = `You are the Cultural Alignment Layer: a warm, authoritative Cultural Process & Decision Advisor for Tamil, Tanglish, and Indian English conversations.
-
-When a user asks any cultural, family, ritual, marriage, hospitality, or financial question:
-1. Explain the authentic customary process followed in their culture ("As per your culture, here is the process they follow...").
-2. Provide concrete, actionable steps they should try right now ("So try these steps..."), including respectful Tanglish/Tamil phrases they can say.
-Never output a dry dialect/state detection dictionary.`
 
 function stripMarkdownForSpeech(md: string): string {
   return md
@@ -267,54 +259,22 @@ function App() {
     setSubtitleText('Consulting traditions and preparing guidance...')
 
     try {
-      let answer = ''
-      let spoken = ''
+      // Query FastAPI Cultural Alignment Mediator
+      const mediatorResponse = await fetch(`${MEDIATOR_API_URL}/api/mediate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, model: MODEL }),
+      })
 
-      // 1. Try FastAPI Cultural Mediator first
-      try {
-        const mediatorResponse = await fetch(`${MEDIATOR_API_URL}/api/mediate`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query, model: MODEL }),
-        })
-        if (mediatorResponse.ok) {
-          const mediated = await mediatorResponse.json()
-          answer = mediated.conversational_response || mediated.mediated_response || ''
-          spoken = mediated.spoken_response || stripMarkdownForSpeech(answer)
-        }
-      } catch {
-        // Fallback to direct Groq API if local backend is offline
+      if (!mediatorResponse.ok) {
+        const errJson = await mediatorResponse.json().catch(() => null)
+        const detail = errJson?.detail || `Backend returned HTTP status ${mediatorResponse.status}`
+        throw new Error(detail)
       }
 
-      // 2. Fallback to Groq direct completion if Mediator wasn't reachable
-      if (!answer) {
-        if (!API_KEY) {
-          throw new Error('Backend server offline at localhost:8000 and no VITE_GROQ_API_KEY configured.')
-        }
-        const history = [...messages, userMessage]
-          .filter((m) => !m.error)
-          .slice(-8)
-          .map(({ role, content }) => ({ role, content }))
-
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: MODEL,
-            messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history],
-            temperature: 0.5,
-            max_tokens: 1000,
-          }),
-        })
-
-        if (!response.ok) throw new Error(`Request failed (${response.status})`)
-        const data = await response.json()
-        answer = data.choices?.[0]?.message?.content?.trim() || ''
-        spoken = stripMarkdownForSpeech(answer)
-      }
+      const mediated = await mediatorResponse.json()
+      const answer = mediated.conversational_response || mediated.mediated_response || ''
+      const spoken = mediated.spoken_response || stripMarkdownForSpeech(answer)
 
       const assistantMsg: Message = {
         id: Date.now() + 1,

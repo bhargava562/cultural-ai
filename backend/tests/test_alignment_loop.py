@@ -363,3 +363,52 @@ def test_regional_slang_tier2_locking():
     assert p_delta.detected_region == "Cauvery Delta & Pudukkottai"
 
 
+def test_key_rotator_discovers_numbered_keys_and_rotates(monkeypatch):
+    """Test KeyRotator discovers GROQ_API_KEY_1 and GROQ_API_KEY_2 and rotates smoothly."""
+    from src.utils.llm_clients import KeyRotator
+
+    monkeypatch.setenv("GROQ_API_KEY_1", "gsk_test_key_one_123456789")
+    monkeypatch.setenv("GROQ_API_KEY_2", "gsk_test_key_two_987654321")
+    monkeypatch.delenv("GROQ_API_KEY", raising=False)
+
+    rotator = KeyRotator("GROQ_API_KEY", ["GROQ_API_KEY", "GROQ_API_KEYS"])
+    assert len(rotator.keys) >= 2
+    assert rotator.keys[0] == "gsk_test_key_one_123456789"
+    assert rotator.keys[1] == "gsk_test_key_two_987654321"
+
+    # Initial key is key 1
+    assert rotator.get_current_key() == "gsk_test_key_one_123456789"
+
+    # Rotating advances to key 2
+    next_key = rotator.rotate()
+    assert next_key == "gsk_test_key_two_987654321"
+    assert rotator.get_current_key() == "gsk_test_key_two_987654321"
+
+
+@patch("litellm.completion")
+def test_generate_completion_rotates_on_rate_limit(mock_litellm, monkeypatch):
+    """Test generate_completion catches HTTP 429 rate limit, rotates from key 1 to key 2, and succeeds."""
+    import os
+    from src.utils.llm_clients import generate_completion, groq_rotator
+
+    monkeypatch.setenv("GROQ_API_KEY_1", "gsk_test_key_one_123456789")
+    monkeypatch.setenv("GROQ_API_KEY_2", "gsk_test_key_two_987654321")
+    monkeypatch.delenv("GROQ_API_KEY", raising=False)
+    groq_rotator.reload_keys()
+
+    # First attempt fails with 429 Rate Limit; second attempt succeeds with rotated key
+    mock_success_response = MagicMock()
+    mock_success_response.choices = [MagicMock(message=MagicMock(content="Culturally aligned answer"))]
+    mock_litellm.side_effect = [
+        Exception("Rate limit reached: 429 Too Many Requests. Rate limit: 6000 TPM."),
+        mock_success_response,
+    ]
+
+    answer = generate_completion("groq/openai/gpt-oss-120b", [{"role": "user", "content": "Vanakkam"}])
+    assert answer == "Culturally aligned answer"
+    assert mock_litellm.call_count == 2
+    # Verify second call received the rotated key (key 2)
+    assert mock_litellm.call_args_list[1][1]["api_key"] == "gsk_test_key_two_987654321"
+
+
+
