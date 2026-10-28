@@ -32,28 +32,30 @@ cultural-alignment-layer/
 │   ├── ARCHITECTURE.md             # Pipeline specifications & flow diagrams
 │   ├── EVALUATION_RUBRIC.md        # Alignment dimensions & JSON schemas
 │   └── TAXONOMY.md                 # Tamil socio-cultural dimensions & Hofstede/UNESCO mapping
-├── data/
-│   ├── raw/                        # Hugging Face downloaded chunks
-│   └── processed/                  # Filtered JSONL / CSV benchmarks
-├── vector_store/                   # Local ChromaDB persistent index
-├── src/
-│   ├── __init__.py
-│   ├── config.py                   # Central settings, environment variables, thresholds
-│   ├── retriever/                  # Cultural RAG
+├── backend/                        # Python FastAPI backend & Cultural Alignment Engine
+│   ├── .env                        # Backend environment configuration & API keys
+│   ├── .env.example                # Backend environment template
+│   ├── requirements.txt            # Python dependencies
+│   ├── data/
+│   │   ├── datasets/               # Structured Tamil tradition datasets
+│   │   ├── raw/                    # Raw corpora
+│   │   └── processed/              # Filtered benchmarks
+│   ├── vector_store/               # Local ChromaDB persistent index
+│   ├── src/
 │   │   ├── __init__.py
-│   │   ├── ingest.py               # Batch/streaming ingestion from Hugging Face
-│   │   └── search.py               # ChromaDB query & similarity search
-│   ├── pipeline/                   # Feedback-guided alignment loop
-│   │   ├── __init__.py
-│   │   ├── generator.py            # Cultural candidate generation
-│   │   ├── evaluator.py            # Multi-aspect cultural judge
-│   │   └── interceptor.py          # Decision engine & rewriting loop
-│   └── utils/
+│   │   ├── main.py                 # FastAPI mediation API server
+│   │   ├── config.py               # Settings, environment paths, thresholds
+│   │   ├── retriever/              # Cultural RAG & vector store search
+│   │   ├── pipeline/               # Generator, evaluator, interceptor, guardrails
+│   │   └── utils/                  # LiteLLM client wrapper with key rotation
+│   └── tests/
 │       ├── __init__.py
-│       └── llm_clients.py          # Unified LiteLLM wrapper with rate-limit retries
-├── tests/
-│   ├── __init__.py
-│   └── test_alignment_loop.py      # Unit & integration tests
+│       └── test_alignment_loop.py  # Unit & integration tests
+├── frontend/                       # Vite + React + TypeScript web app & Kiosk mode
+│   ├── .env                        # Frontend environment variables
+│   ├── .env.example                # Frontend environment template
+│   ├── package.json
+│   └── src/                        # React UI, KioskAvatar, Web Speech STT/TTS
 ├── requirements.txt
 ├── .env.example
 ├── README.md
@@ -94,17 +96,21 @@ cultural-alignment-layer/
 # Activate Virtual Environment (Windows PowerShell)
 .venv\Scripts\Activate.ps1
 
-# Install Dependencies
-pip install -r requirements.txt
+# Install Backend Dependencies
+pip install -r backend/requirements.txt
 
-# Run Unit & Offline Mock Tests
-pytest -v tests/
+# Run Unit & Offline Mock Tests (from root or backend directory)
+pytest -v backend/tests/
+# or: cd backend && pytest -v tests/
 
 # Ingest Sample Cultural Data into Local ChromaDB
-python -m src.retriever.ingest --sample
+cd backend && python -m src.retriever.ingest --sample
 
-# Run the Cultural Alignment Interceptor CLI
-python -m src.pipeline.interceptor --query "How should I invite my elder relatives for Pongal festival?"
+# Run FastAPI Backend Server
+cd backend && python -m uvicorn src.main:app --host 127.0.0.1 --port 8000
+
+# Run Frontend Vite Server
+cd frontend && npm run dev
 ```
 
 ---

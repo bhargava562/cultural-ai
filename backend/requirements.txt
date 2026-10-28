@@ -1,0 +1,12 @@
+litellm>=1.40.0
+chromadb>=0.5.0
+sentence-transformers>=3.0.0
+datasets>=2.20.0
+pydantic>=2.7.0
+pydantic-settings>=2.2.0
+python-dotenv>=1.0.0
+rich>=13.7.0
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+fastapi>=0.115.0
+uvicorn>=0.30.0

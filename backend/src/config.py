@@ -1,15 +1,23 @@
-"""Configuration management for Cultural Alignment Layer."""
-
+import sys
 from pathlib import Path
 from typing import Optional
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from dotenv import load_dotenv
 
-# Ensure local .env is loaded
-load_dotenv()
-
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Ensure backend directory is in sys.path so 'from src...' imports work seamlessly from any CWD
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+# Load .env: prioritize backend/.env, fallback to root .env
+if (BASE_DIR / ".env").exists():
+    load_dotenv(BASE_DIR / ".env")
+elif (BASE_DIR.parent / ".env").exists():
+    load_dotenv(BASE_DIR.parent / ".env")
+else:
+    load_dotenv()
 
 
 class Settings(BaseSettings):
@@ -59,7 +67,7 @@ class Settings(BaseSettings):
     processed_data_dir: Path = BASE_DIR / "data" / "processed"
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=[str(BASE_DIR / ".env"), str(BASE_DIR.parent / ".env"), ".env"],
         env_file_encoding="utf-8",
         extra="ignore",
     )

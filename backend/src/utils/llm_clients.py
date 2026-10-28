@@ -5,10 +5,15 @@ import re
 import time
 import logging
 from typing import Any, Optional
+from pathlib import Path
 from dotenv import load_dotenv
 from rich.console import Console
 
-load_dotenv()
+_backend_env = Path(__file__).resolve().parent.parent.parent / ".env"
+if _backend_env.exists():
+    load_dotenv(_backend_env)
+else:
+    load_dotenv()
 logger = logging.getLogger("cultural_ai.llm")
 console = Console()
 

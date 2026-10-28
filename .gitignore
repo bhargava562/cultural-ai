@@ -24,8 +24,9 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual environments
+# Virtual environments & secrets
 .env
+**/.env
 .venv
 env/
 venv/
@@ -35,13 +36,21 @@ venv.bak/
 
 # Vector database storage & Hugging Face cache
 vector_store/chroma_db/
+backend/vector_store/chroma_db/
 data/raw/*
 !data/raw/.gitkeep
+backend/data/raw/*
+!backend/data/raw/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+backend/data/processed/*
+!backend/data/processed/.gitkeep
 data/datasets/*
 !data/datasets/.gitkeep
 !data/datasets/tn_regional_traditions_tanglish.json
+backend/data/datasets/*
+!backend/data/datasets/.gitkeep
+!backend/data/datasets/tn_regional_traditions_tanglish.json
 .cache/
 hf_cache/
 
