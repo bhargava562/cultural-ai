@@ -115,8 +115,9 @@ def generate_completion(
 
     # Fallback model candidate map if TPM bucket is exhausted on current model
     fallbacks = {
-        "groq/openai/gpt-oss-120b": "groq/mistral-saba-24b",
-        "openai/gpt-oss-120b": "groq/mistral-saba-24b",
+        "groq/openai/gpt-oss-120b": "groq/openai/gpt-oss-20b",
+        "openai/gpt-oss-120b": "groq/openai/gpt-oss-20b",
+        "groq/openai/gpt-oss-20b": "groq/qwen/qwen3.8-27b",
     }
 
     current_model = model
@@ -164,13 +165,29 @@ def generate_completion(
 
             if is_rate_limit or is_auth_error:
                 model_lower = current_model.lower()
+                is_too_large = (
+                    "request too large" in err_msg
+                    or "reduce your message size" in err_msg
+                    or ("tokens per minute" in err_msg and "limit" in err_msg)
+                )
+
+                # If the single payload exceeds the model's absolute TPM limit, switch model immediately
+                if is_too_large and current_model in fallbacks:
+                    alt_model = fallbacks[current_model]
+                    console.print(
+                        f"[yellow]Payload exceeds TPM limit on {current_model}. Switching to fallback model {alt_model}...[/yellow]"
+                    )
+                    current_model = alt_model
+                    time.sleep(0.3)
+                    continue
+
                 rotated = False
-                if "groq" in model_lower and len(groq_rotator.keys) > 1:
+                if attempt == 0 and "groq" in model_lower and len(groq_rotator.keys) > 1:
                     new_key = groq_rotator.rotate()
                     if new_key:
                         os.environ["GROQ_API_KEY"] = new_key
                     rotated = True
-                elif "gemini" in model_lower and len(gemini_rotator.keys) > 1:
+                elif attempt == 0 and "gemini" in model_lower and len(gemini_rotator.keys) > 1:
                     new_key = gemini_rotator.rotate()
                     if new_key:
                         os.environ["GEMINI_API_KEY"] = new_key
@@ -180,11 +197,11 @@ def generate_completion(
                     time.sleep(0.3)
                     continue
 
-                # 2. If single key or all keys exhausted for this model, try fallback model with separate TPM quota
-                if attempt >= 1 and current_model in fallbacks:
+                # If key was already rotated or multiple attempts failed, try fallback model
+                if current_model in fallbacks:
                     alt_model = fallbacks[current_model]
                     console.print(
-                        f"[yellow]TPM limit on {current_model}. Switching to alternative Indic model {alt_model}...[/yellow]"
+                        f"[yellow]Rate limit on {current_model}. Switching to fallback model {alt_model}...[/yellow]"
                     )
                     current_model = alt_model
                     time.sleep(0.5)
