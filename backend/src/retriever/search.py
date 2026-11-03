@@ -24,32 +24,35 @@ class CulturalRetriever:
         self.collection = get_or_create_collection(self.client)
 
     def search(self, query: str, profile: Any = None, top_k: int = 3, domain: Optional[str] = None) -> list[dict[str, Any]]:
-        where: dict[str, Any] = {}
-        culture = getattr(profile, "detected_culture", None)
-        if culture and not culture.startswith("Neutral"):
-            where["dialect_tag"] = culture
-        if domain:
-            where["domain"] = domain
-        kwargs: dict[str, Any] = {"query_texts": [query], "n_results": min(top_k, self.collection.count())}
-        if where:
-            kwargs["where"] = {"$and": [{key: value} for key, value in where.items()]}
-        if not self.collection.count():
-            return []
         try:
-            results = self.collection.query(**kwargs)
-        except Exception:
-            # A sparse local corpus should still return semantically useful facts.
-            kwargs.pop("where", None)
-            results = self.collection.query(**kwargs)
-        snippets = _results_to_snippets(results)
-        if not snippets and where:
-            kwargs.pop("where", None)
+            if not self.collection or not self.collection.count():
+                return []
+            where: dict[str, Any] = {}
+            culture = getattr(profile, "detected_culture", None)
+            if culture and not culture.startswith("Neutral"):
+                where["dialect_tag"] = culture
+            if domain:
+                where["domain"] = domain
+            kwargs: dict[str, Any] = {"query_texts": [query], "n_results": min(top_k, self.collection.count())}
+            if where:
+                kwargs["where"] = {"$and": [{key: value} for key, value in where.items()]}
             try:
                 results = self.collection.query(**kwargs)
-                snippets = _results_to_snippets(results)
             except Exception:
-                pass
-        return snippets
+                # A sparse local corpus should still return semantically useful facts.
+                kwargs.pop("where", None)
+                results = self.collection.query(**kwargs)
+            snippets = _results_to_snippets(results)
+            if not snippets and where:
+                kwargs.pop("where", None)
+                try:
+                    results = self.collection.query(**kwargs)
+                    snippets = _results_to_snippets(results)
+                except Exception:
+                    pass
+            return snippets
+        except Exception as exc:
+            return []
 
 
 def _results_to_snippets(results: dict[str, Any]) -> list[dict[str, Any]]:

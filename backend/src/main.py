@@ -39,7 +39,7 @@ app.add_middleware(
         "http://localhost:8000",
         "http://127.0.0.1:8000",
     ],
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
+    allow_origin_regex=r"^https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -49,7 +49,7 @@ app.add_middleware(
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     logger.error("Unhandled error in /api/mediate: %s", exc, exc_info=True)
-    origin = request.headers.get("origin") or "http://localhost:5173"
+    origin = request.headers.get("origin") or "*"
     return JSONResponse(
         status_code=500,
         content={"detail": str(exc)},
@@ -109,12 +109,15 @@ class MediateResponse(BaseModel):
     guardrail: dict[str, Any]
 
 
+@app.get("/")
 @app.get("/health")
+@app.get("/api/health")
 def health() -> dict[str, str]:
-    return {"status": "ok"}
+    return {"status": "ok", "service": "Cultural Alignment Mediator"}
 
 
 @app.post("/api/mediate", response_model=MediateResponse)
+@app.post("/mediate", response_model=MediateResponse)
 def mediate(request: MediateRequest) -> MediateResponse:
     guardrail_result = slang_guardrail.alignment_middleware(request.query)
     profile = classifier.classify(request.query)

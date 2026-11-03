@@ -38,7 +38,10 @@ type Message = {
 }
 
 const MODEL = import.meta.env.VITE_GROQ_MODEL || 'openai/gpt-oss-120b'
-const MEDIATOR_API_URL = import.meta.env.VITE_MEDIATOR_API_URL || 'http://127.0.0.1:8000'
+const rawApiUrl = import.meta.env.VITE_MEDIATOR_API_URL
+const MEDIATOR_API_URL = (rawApiUrl !== undefined && rawApiUrl !== '')
+  ? rawApiUrl.replace(/\/+$/, '')
+  : (import.meta.env.DEV ? 'http://127.0.0.1:8000' : '')
 
 const starterPrompts = [
   'How should I invite my elder relatives for Pongal?',

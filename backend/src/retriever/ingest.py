@@ -102,11 +102,29 @@ SAMPLE_CULTURAL_DOCS = [
 ]
 
 
-def get_chroma_client(persist_dir: Optional[str] = None) -> chromadb.PersistentClient:
-    """Initialize persistent local ChromaDB client."""
-    path = persist_dir or settings.chroma_persist_dir
-    Path(path).mkdir(parents=True, exist_ok=True)
-    return chromadb.PersistentClient(path=path)
+def get_chroma_client(persist_dir: Optional[str] = None):
+    """Initialize persistent local ChromaDB client with serverless read-only filesystem handling."""
+    path = Path(persist_dir or settings.chroma_persist_dir)
+    is_serverless = bool(os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"))
+
+    target_path = path
+    parent_to_check = path.parent if path.exists() else BASE_DIR
+    if is_serverless or not os.access(str(parent_to_check), os.W_OK):
+        import shutil
+        tmp_chroma_path = Path("/tmp/cultural_ai_chroma_db")
+        if path.exists() and not (tmp_chroma_path / "chroma.sqlite3").exists():
+            try:
+                shutil.copytree(str(path), str(tmp_chroma_path), dirs_exist_ok=True)
+            except Exception as e:
+                logger.warning("Failed to copy ChromaDB to /tmp: %s", e)
+        target_path = tmp_chroma_path
+
+    try:
+        target_path.mkdir(parents=True, exist_ok=True)
+        return chromadb.PersistentClient(path=str(target_path))
+    except Exception as exc:
+        logger.warning("Persistent ChromaDB client failed at %s (%s). Falling back to EphemeralClient.", target_path, exc)
+        return chromadb.EphemeralClient()
 
 
 def get_or_create_collection(client: chromadb.PersistentClient) -> chromadb.Collection:

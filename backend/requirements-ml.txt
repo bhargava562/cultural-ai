@@ -1,0 +1,3 @@
+# Optional dependencies for offline heavy model fine-tuning and HF dataset scraping
+sentence-transformers>=3.0.0
+datasets>=2.20.0
