@@ -18,6 +18,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
+from starlette.types import ASGIApp, Receive, Scope, Send
 
 from src.pipeline.evaluator import CulturalEvaluationResult
 from src.pipeline.generator import MediatedResponseGenerator, detect_language_mode
@@ -28,6 +29,26 @@ from src.retriever.search import CulturalRetriever
 logger = logging.getLogger("cultural_ai.main")
 
 app = FastAPI(title="Cultural Alignment Mediator", version="0.2.0")
+
+
+class VercelPathRewriteMiddleware:
+    """Restores original request path from Vercel x-matched-path header when rewrites are used."""
+
+    def __init__(self, app: ASGIApp) -> None:
+        self.app = app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        if scope["type"] == "http":
+            headers = dict(scope.get("headers", []))
+            matched_path = headers.get(b"x-matched-path", b"").decode("utf-8")
+            if matched_path:
+                clean_path = matched_path.split("?")[0]
+                scope["path"] = clean_path
+                scope["raw_path"] = clean_path.encode("utf-8")
+        await self.app(scope, receive, send)
+
+
+app.add_middleware(VercelPathRewriteMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
@@ -112,12 +133,16 @@ class MediateResponse(BaseModel):
 @app.get("/")
 @app.get("/health")
 @app.get("/api/health")
+@app.get("/api/index")
+@app.get("/api/index.py")
 def health() -> dict[str, str]:
     return {"status": "ok", "service": "Cultural Alignment Mediator"}
 
 
 @app.post("/api/mediate", response_model=MediateResponse)
 @app.post("/mediate", response_model=MediateResponse)
+@app.post("/api/index", response_model=MediateResponse)
+@app.post("/api/index.py", response_model=MediateResponse)
 def mediate(request: MediateRequest) -> MediateResponse:
     guardrail_result = slang_guardrail.alignment_middleware(request.query)
     profile = classifier.classify(request.query)
